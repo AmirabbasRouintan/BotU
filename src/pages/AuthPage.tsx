@@ -145,8 +145,8 @@ export default function AuthPage() {
 
   return (
     <div className="min-h-[90vh] flex items-center overflow-y-hidden justify-center">
-      <div className="fixed -left-[30rem] inset-0 z-[0]">
-        <Threads amplitude={2} distance={0} enableMouseInteraction={false} />
+      <div className="fixed -left-[30rem] inset-0 z-[-1]">
+        <Threads amplitude={1} distance={0} enableMouseInteraction={false} />
       </div>
       <div className="w-full max-w-md mx-auto">
         <Tabs
