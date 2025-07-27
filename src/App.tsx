@@ -4,6 +4,7 @@ import Landing from "./pages/Landing";
 import Navbar from "./components/Navbar";
 import ClickSpark from "./Animations/ClickSpark/ClickSpark";
 import Template from "./pages/Template";
+import AuthPage from "./pages/AuthPage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/home" element={<Home />} />
           <Route path="/template" element={<Template />} />
+          <Route path="/auth" element={<AuthPage />} />
         </Routes>
       </>
     </ClickSpark>

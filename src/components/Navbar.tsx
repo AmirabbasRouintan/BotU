@@ -5,6 +5,7 @@ import pfp from "@/assets/pfp.jpg";
 import MetaBalls from "@/Animations/MetaBalls/MetaBalls";
 
 const navItems = [
+  { label: "SignIn", to: "/auth" },
   { label: "Templates", to: "/Template" },
   { label: "My Services", to: "/services" },
   { label: "Cases", to: "/cases" },
