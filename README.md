@@ -1,6 +1,6 @@
 # 🤖 Telegram Bot Builder Platform 🚀
 
-![Project Preview](https://via.placeholder.com/800x400.png?text=Telegram+Bot+Builder+Dashboard+Preview)
+![Project Preview](<img width="2536" height="1433" alt="image" src="https://github.com/user-attachments/assets/bcd7ea02-7a24-4cad-a771-60fd60e2a4da" />)
 
 > **Create powerful Telegram bots without coding** using our intuitive drag-and-drop interface and templates!
 
