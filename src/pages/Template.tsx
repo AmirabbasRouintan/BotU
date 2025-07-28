@@ -106,7 +106,7 @@ export default function Template() {
           className="w-full flex flex-col md:flex-row"
         >
           {/* Scrollable tabs for mobile */}
-          <TabsList className="bg-[#85858523] backdrop-blur rounded-xl p-2 mb-4 md:mb-0 md:mr-4 flex flex-row md:flex-col overflow-x-auto whitespace-nowrap">
+          <TabsList className="bg-[#85858510] backdrop-blur border border-border shadow-xl rounded-xl p-2 mb-4 md:mb-0 md:mr-4 flex flex-row md:flex-col overflow-x-auto whitespace-nowrap">
             <TabsTrigger
               value="commands"
               className="px-3 py-2 text-sm md:text-base md:text-left"
@@ -250,7 +250,7 @@ export default function Template() {
           </TabsContent>
 
           <TabsContent value="api" className="animate-fadeIn">
-            <Card className="bg-card backdrop-blur-xl rounded-2xl border border-border shadow-xl">
+            <Card className="bg-[#85858510] backdrop-blur-xl rounded-2xl border border-border shadow-xl">
               <CardHeader className="flex flex-col md:flex-row items-start justify-between">
                 <div>
                   <CardTitle className="text-2xl md:text-3xl font-bold">
@@ -282,7 +282,7 @@ export default function Template() {
               <CardContent>
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                   {/* General Settings Card */}
-                  <Card className="border-border hover:border-primary/50 transition-all">
+                  <Card className="bg-[#0000005b] backdrop-blur border-border hover:border-primary/50 transition-all">
                     <CardHeader>
                       <CardTitle className="flex items-center">
                         <Cog className="mr-2 h-5 w-5 text-primary" />
@@ -350,7 +350,7 @@ export default function Template() {
                   </Card>
 
                   {/* Appearance Card */}
-                  <Card className="border-border hover:border-primary/50 transition-all">
+                  <Card className="bg-[#0000005b] backdrop-blur border-border hover:border-primary/50 transition-all">
                     <CardHeader>
                       <CardTitle className="flex items-center">
                         <Palette className="mr-2 h-5 w-5 text-primary" />
@@ -419,7 +419,7 @@ export default function Template() {
                   </Card>
 
                   {/* AI Behavior Card */}
-                  <Card className="border-border hover:border-primary/50 transition-all">
+                  <Card className="bg-[#0000005b] backdrop-blur border-border hover:border-primary/50 transition-all">
                     <CardHeader>
                       <CardTitle className="flex items-center">
                         <Brain className="mr-2 h-5 w-5 text-primary" />
@@ -514,7 +514,7 @@ export default function Template() {
                 <Separator className="my-6 md:my-10" />
 
                 {/* AI Model Configuration Section */}
-                <Card className="border-border mb-8">
+                <Card className="bg-[#0000005b] backdrop-blur border-border mb-8">
                   <CardHeader>
                     <CardTitle className="flex items-center">
                       <Cpu className="mr-2 h-5 w-5 text-primary" />
@@ -625,7 +625,7 @@ export default function Template() {
                       <Label className="text-muted-foreground mb-3 block">
                         Model Capabilities
                       </Label>
-                      <div className="overflow-x-auto">
+                      <div className="overflow-x-auto bg-[#ffffff00] backdrop-blur rounded-lg">
                         <Table>
                           <TableHeader>
                             <TableRow>
@@ -698,7 +698,7 @@ export default function Template() {
                 <Separator className="my-6 md:my-10" />
 
                 {/* Commands Section */}
-                <Card className="border-border mb-8">
+                <Card className="bg-[#0000005b] backdrop-blur border-border mb-8">
                   <CardHeader className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <CardTitle className="flex items-center">
                       <Terminal className="mr-2 h-5 w-5 text-primary" />
@@ -716,111 +716,149 @@ export default function Template() {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <div className="overflow-x-auto">
-                      <Table>
-                        <TableHeader className="bg-muted/50">
-                          <TableRow>
-                            <TableHead className="text-muted-foreground">
-                              Command
-                            </TableHead>
-                            <TableHead className="text-muted-foreground">
-                              Response
-                            </TableHead>
-                            <TableHead className="text-muted-foreground">
-                              Permissions
-                            </TableHead>
-                            <TableHead className="text-muted-foreground">
-                              Status
-                            </TableHead>
-                            <TableHead className="text-muted-foreground">
-                              Actions
-                            </TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          <TableRow className="hover:bg-muted/40">
-                            <TableCell className="font-medium">/help</TableCell>
-                            <TableCell>Shows help information</TableCell>
-                            <TableCell>
-                              <Badge variant="secondary">Everyone</Badge>
-                            </TableCell>
-                            <TableCell>
-                              <Badge className="bg-green-500/20 text-green-500">
-                                <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
-                                Active
-                              </Badge>
-                            </TableCell>
-                            <TableCell>
-                              <div className="flex gap-2">
-                                <Button variant="outline" size="icon">
-                                  <Edit className="h-4 w-4 text-primary" />
-                                </Button>
-                                <Button variant="outline" size="icon">
-                                  <Trash2 className="h-4 w-4 text-destructive" />
-                                </Button>
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                          <TableRow className="hover:bg-muted/40">
-                            <TableCell className="font-medium">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {/* Command Card 1 */}
+                      <Card className="bg-[#ffffff11] backdrop-blur border-border hover:border-primary transition-colors">
+                        <CardHeader className="pb-3">
+                          <div className="flex justify-between items-start">
+                            <CardTitle className="text-lg font-mono">
+                              /help
+                            </CardTitle>
+                            <div className="flex gap-1">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8"
+                              >
+                                <Edit className="h-4 w-4 text-primary" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8"
+                              >
+                                <Trash2 className="h-4 w-4 text-destructive" />
+                              </Button>
+                            </div>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="pt-0">
+                          <p className="text-muted-foreground mb-3">
+                            Shows help information
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            <Badge variant="secondary">Everyone</Badge>
+                            <Badge className="bg-green-500/20 text-green-500">
+                              <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
+                              Active
+                            </Badge>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      {/* Command Card 2 */}
+                      <Card className="bg-[#ffffff11] backdrop-blur border-border hover:border-primary transition-colors">
+                        <CardHeader className="pb-3">
+                          <div className="flex justify-between items-start">
+                            <CardTitle className="text-lg font-mono">
                               /start
-                            </TableCell>
-                            <TableCell>Welcome message</TableCell>
-                            <TableCell>
-                              <Badge variant="secondary">Everyone</Badge>
-                            </TableCell>
-                            <TableCell>
-                              <Badge className="bg-green-500/20 text-green-500">
-                                <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
-                                Active
-                              </Badge>
-                            </TableCell>
-                            <TableCell>
-                              <div className="flex gap-2">
-                                <Button variant="outline" size="icon">
-                                  <Edit className="h-4 w-4 text-primary" />
-                                </Button>
-                                <Button variant="outline" size="icon">
-                                  <Trash2 className="h-4 w-4 text-destructive" />
-                                </Button>
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                          <TableRow className="hover:bg-muted/40">
-                            <TableCell className="font-medium">
+                            </CardTitle>
+                            <div className="flex gap-1">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8"
+                              >
+                                <Edit className="h-4 w-4 text-primary" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8"
+                              >
+                                <Trash2 className="h-4 w-4 text-destructive" />
+                              </Button>
+                            </div>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="pt-0">
+                          <p className="text-muted-foreground mb-3">
+                            Welcome message
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            <Badge variant="secondary">Everyone</Badge>
+                            <Badge className="bg-green-500/20 text-green-500">
+                              <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
+                              Active
+                            </Badge>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      {/* Command Card 3 */}
+                      <Card className="bg-[#ffffff11] backdrop-blur border-border hover:border-primary transition-colors">
+                        <CardHeader className="pb-3">
+                          <div className="flex justify-between items-start">
+                            <CardTitle className="text-lg font-mono">
                               /admin
-                            </TableCell>
-                            <TableCell>Admin commands menu</TableCell>
-                            <TableCell>
-                              <Badge variant="secondary">Admins Only</Badge>
-                            </TableCell>
-                            <TableCell>
-                              <Badge className="bg-yellow-500/20 text-yellow-500">
-                                <div className="w-2 h-2 rounded-full bg-yellow-500 mr-2"></div>
-                                Disabled
-                              </Badge>
-                            </TableCell>
-                            <TableCell>
-                              <div className="flex gap-2">
-                                <Button variant="outline" size="icon">
-                                  <Edit className="h-4 w-4 text-primary" />
-                                </Button>
-                                <Button variant="outline" size="icon">
-                                  <Trash2 className="h-4 w-4 text-destructive" />
-                                </Button>
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
+                            </CardTitle>
+                            <div className="flex gap-1">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8"
+                              >
+                                <Edit className="h-4 w-4 text-primary" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8"
+                              >
+                                <Trash2 className="h-4 w-4 text-destructive" />
+                              </Button>
+                            </div>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="pt-0">
+                          <p className="text-muted-foreground mb-3">
+                            Admin commands menu
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            <Badge variant="secondary">Admins Only</Badge>
+                            <Badge className="bg-yellow-500/20 text-yellow-500">
+                              <div className="w-2 h-2 rounded-full bg-yellow-500 mr-2"></div>
+                              Disabled
+                            </Badge>
+                          </div>
+                        </CardContent>
+                      </Card>
                     </div>
+
+                    {/* Empty State */}
+                    {commands.length === 0 && (
+                      <div className="flex flex-col items-center justify-center py-12 text-center">
+                        <Terminal className="h-12 w-12 text-muted-foreground mb-4" />
+                        <h3 className="text-xl font-semibold mb-2">
+                          No commands created
+                        </h3>
+                        <p className="text-muted-foreground max-w-md">
+                          Get started by adding your first custom command.
+                          Commands will appear here once created.
+                        </p>
+                        <Button className="mt-4 gap-2">
+                          <Plus className="h-4 w-4" />
+                          Create First Command
+                        </Button>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
 
                 <Separator className="my-6 md:my-10" />
 
                 {/* Advanced Settings */}
-                <Card className="border-border">
+                <Card className="bg-[#0000005b] backdrop-blur border-border">
                   <CardHeader>
                     <CardTitle className="flex items-center">
                       <Sliders className="mr-2 h-5 w-5 text-primary" />
@@ -928,7 +966,7 @@ export default function Template() {
 
                 {/* Footer */}
                 <div className="mt-6">
-                  <Card>
+                  <Card className="bg-[#0000005b] backdrop-blur">
                     <CardHeader>
                       <CardTitle className="flex items-center">
                         <MessageSquare className="mr-2 h-5 w-5 text-primary" />
