@@ -1,6 +1,3 @@
-/*
-	Installed from https://reactbits.dev/ts/tailwind/
-*/
 
 import { useEffect, useRef, FC } from "react";
 import * as THREE from "three";

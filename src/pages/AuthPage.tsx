@@ -144,7 +144,7 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-[90vh] flex items-center overflow-y-hidden justify-center">
+    <div className="min-h-[90vh] flex items-center overflow-y-hidden justify-center p-4 sm:p-6">
       <div className="fixed -left-[30rem] inset-0 z-[-1]">
         <Threads amplitude={1} distance={0} enableMouseInteraction={false} />
       </div>
@@ -185,7 +185,7 @@ export default function AuthPage() {
               </TabsTrigger>
             </TabsList>
 
-            <CardContent className="">
+            <CardContent className="px-4 sm:px-6 py-4 sm:py-6">
               {/* Login Form */}
               <TabsContent value="login" className="mt-3">
                 <form className="space-y-4" onSubmit={handleSubmit}>
@@ -263,7 +263,7 @@ export default function AuthPage() {
                         </Label>
                       </div>
 
-                      <div className="flex items-center gap-1 text-xs bg-yellow-500/10 px-2 py-1 rounded text-yellow-600">
+                      <div className="items-center gap-1 text-xs bg-yellow-500/10 px-2 py-1 rounded text-yellow-600 hidden sm:flex">
                         <AlertCircle size={14} />
                         <span>Secure connection</span>
                       </div>
@@ -475,7 +475,7 @@ export default function AuthPage() {
 
       {isTermsModalOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-card border border-border rounded-xl max-w-md w-full p-6 shadow-2xl">
+          <div className="bg-card border border-border rounded-xl max-w-md w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-bold flex items-center gap-2">
                 <BookOpen className="h-5 w-5 text-primary" />

@@ -2,9 +2,9 @@
 	Installed from https://reactbits.dev/ts/tailwind/
 */
 
-/* eslint-disable react/no-unknown-property */
+
 import { useRef, useState, useEffect } from "react";
-import { Canvas, useFrame, useThree, ThreeEvent } from "@react-three/fiber";
+import { Canvas, useFrame, useThree, type ThreeEvent } from "@react-three/fiber";
 import { EffectComposer, wrapEffect } from "@react-three/postprocessing";
 import { Effect } from "postprocessing";
 import * as THREE from "three";

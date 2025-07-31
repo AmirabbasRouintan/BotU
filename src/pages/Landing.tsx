@@ -1,20 +1,11 @@
-// import DarkVeil from "@/Backgrounds/DarkVeil/DarkVeil";
 import TrueFocus from "@/TextAnimations/TrueFocus/TrueFocus";
 import Magnet from "@/Animations/Magnet/Magnet";
 // import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-// import { Separator } from "@/components/ui/separator";
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CodeSnipp from "@/components/codesnipp";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from "@/components/ui/table";
-import { Check, X, ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown, ChevronUp, Info } from "lucide-react";
 
 const features1 = [
   {
@@ -75,64 +66,68 @@ const features1 = [
 
 const features2 = [
   {
-    feature: "Number of Bots",
-    botu: "Unlimited",
-    manybot: "Up to 5",
-    flowxo: "Up to 2"
-  },
-  {
-    feature: "Command Limit",
-    botu: "Unlimited",
+    feature: "Unlimited Bots",
+    description: "Create as many bots as you need with no restrictions",
+    botu: "Yes",
     manybot: "Limited",
-    flowxo: "5 (Free) / 15 (Paid)"
+    flowxo: "Paid",
+    priority: 1
   },
   {
-    feature: "Custom Code Support",
-    botu: "Full Access",
-    manybot: "Limited",
-    flowxo: "Limited"
-  },
-  {
-    feature: "Database Integration",
-    botu: "Full Access",
-    manybot: "Not Available",
-    flowxo: "Basic"
-  },
-  {
-    feature: "Webhook Support",
-    botu: "Unlimited",
-    manybot: "Limited",
-    flowxo: "Limited"
-  },
-  {
-    feature: "API Access",
-    botu: "Full Access",
-    manybot: "Not Available",
-    flowxo: "Limited"
-  },
-  {
-    feature: "Inline Button Features",
-    botu: "Advanced",
-    manybot: "Basic",
-    flowxo: "Basic"
+    feature: "Free Hosting",
+    description: "24/7 hosting included at no additional cost",
+    botu: "Yes",
+    manybot: "No",
+    flowxo: "Paid",
+    priority: 2
   },
   {
     feature: "AI Integration",
-    botu: "Included",
-    manybot: "Not Available",
-    flowxo: "Paid Add-on"
+    description: "Built-in AI capabilities for smarter bots",
+    botu: "Yes",
+    manybot: "Limited",
+    flowxo: "Paid",
+    priority: 3
   },
   {
-    feature: "Analytics & Insights",
-    botu: "Detailed",
+    feature: "Custom Scripts",
+    description: "Full JavaScript support for custom functionality",
+    botu: "Yes",
+    manybot: "None",
+    flowxo: "Limited",
+    priority: 4
+  },
+  {
+    feature: "Real-time Analytics",
+    description: "Monitor bot performance with live analytics",
+    botu: "Yes",
     manybot: "Basic",
-    flowxo: "Limited"
+    flowxo: "Paid",
+    priority: 5
   },
   {
-    feature: "Pricing",
-    botu: "Free",
-    manybot: "$10/mo",
-    flowxo: "$18/mo"
+    feature: "Multi-language Support",
+    description: "Create bots that understand multiple languages",
+    botu: "Yes",
+    manybot: "None",
+    flowxo: "Paid",
+    priority: 6
+  },
+  {
+    feature: "API Access",
+    description: "Full REST API for advanced integrations",
+    botu: "Yes",
+    manybot: "Limited",
+    flowxo: "Paid",
+    priority: 7
+  },
+  {
+    feature: "Scheduled Tasks",
+    description: "Automate tasks at specific times or intervals",
+    botu: "Yes",
+    manybot: "No",
+    flowxo: "Limited",
+    priority: 8
   }
 ];
 
@@ -164,9 +159,50 @@ const audience = [
 ];
 
 export default function Landing() {
+  const [expandedFeature, setExpandedFeature] = useState<number | null>(null);
+  const [sortConfig, setSortConfig] = useState({
+    key: "priority",
+    direction: "ascending"
+  });
+
+  const sortedFeatures = [...features2].sort((a, b) => {
+    if (sortConfig.direction === "ascending") {
+      return a[sortConfig.key as keyof typeof a] >
+        b[sortConfig.key as keyof typeof b]
+        ? 1
+        : -1;
+    } else {
+      return a[sortConfig.key as keyof typeof a] <
+        b[sortConfig.key as keyof typeof b]
+        ? 1
+        : -1;
+    }
+  });
+
+  const toggleExpand = (index: number) => {
+    setExpandedFeature(expandedFeature === index ? null : index);
+  };
+
+  const requestSort = (key: string) => {
+    let direction = "ascending";
+    if (sortConfig.key === key && sortConfig.direction === "ascending") {
+      direction = "descending";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const getSortIcon = (columnName: string) => {
+    if (sortConfig.key !== columnName) return null;
+    return sortConfig.direction === "ascending" ? (
+      <ChevronUp className="w-3 h-3 ml-1 inline-block" />
+    ) : (
+      <ChevronDown className="w-3 h-3 ml-1 inline-block" />
+    );
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center mt-20 select-none">
-      <div className="Section-1 flex flex-col justify-center items-center">
+    <div className="flex flex-col items-center justify-center mt-20 select-none bg-transparent">
+      <div className="Section-1 flex flex-col justify-center items-center bg-transparent">
         <Magnet padding={5000} disabled={false} magnetStrength={50}>
           <h1 className="font-extralight text-lg mb-7 text-center [text-shadow:_0px_0px_20px_#000000]">
             Telegram bot templates
@@ -214,7 +250,7 @@ export default function Landing() {
 
       <CodeSnipp />
 
-      <div className="Section-2 mb-20 text-center">
+      <div className="Section-2 mb-20 text-center bg-transparent">
         <h2 className="text-4xl font-bold drop-shadow-md mb-4">
           Build Your Bot in Just a Few Easy Steps
         </h2>
@@ -224,7 +260,7 @@ export default function Landing() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 px-4 max-w-5xl mx-auto">
-          <Card className="h-full border-2 rounded-xl shadow-sm transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
+          <Card className="h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
             <CardHeader className="items-center">
               <div className="bg-primary/10 text-primary rounded-lg w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
                 <span className="text-2xl">🛠️</span>
@@ -239,7 +275,7 @@ export default function Landing() {
             </CardContent>
           </Card>
 
-          <Card className="h-full border-2 rounded-xl shadow-sm transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
+          <Card className="h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
             <CardHeader className="items-center">
               <div className="bg-primary/10 text-primary rounded-lg w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
                 <span className="text-2xl">✨</span>
@@ -254,7 +290,7 @@ export default function Landing() {
             </CardContent>
           </Card>
 
-          <Card className="h-full border-2 rounded-xl shadow-sm transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
+          <Card className="h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
             <CardHeader className="items-center">
               <div className="bg-primary/10 text-primary rounded-lg w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
                 <span className="text-2xl">🚀</span>
@@ -271,9 +307,9 @@ export default function Landing() {
         </div>
       </div>
 
-      <div className="Section-3 mb-16 py-16">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="text-center mb-16">
+      <div className="Section-3 mb-16 py-16 bg-transparent">
+        <div className="container mx-auto px-4 max-w-6xl bg-transparent">
+          <div className="text-center mb-16 bg-transparent">
             <h1 className="text-4xl font-bold mb-4">
               Powerful Features With Easy Coding
             </h1>
@@ -292,7 +328,7 @@ export default function Landing() {
             {features1.map((feature, index) => (
               <Card
                 key={index}
-                className="group h-full border-2 rounded-xl shadow-sm transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10"
+                className="group h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10"
               >
                 <CardHeader className="pb-3">
                   <div className="bg-primary/10 text-primary rounded-lg w-12 h-12 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
@@ -309,109 +345,226 @@ export default function Landing() {
         </div>
       </div>
 
-      <div className="Section-4 py-12 mb-16">
+      <div className="Section-4 py-12 bg-transparent">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="text-center mb-10">
-            <h1 className="text-3xl font-bold mb-3">Why Choose Us?</h1>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Discover how BotU compares to other popular Telegram bot
-              platforms.
+            <h2 className="text-2xl font-bold mb-3">Platform Comparison</h2>
+            <p className="text-muted-foreground">
+              See how BotU outperforms other Telegram bot platforms
             </p>
           </div>
 
-          <div className="overflow-x-auto pb-2">
-            <Table className="min-w-[600px]">
-              <TableHeader>
-                <TableRow className="border-b border-border">
-                  <TableHead className="w-[30%] py-3 text-left font-semibold">
-                    FEATURE
-                  </TableHead>
-                  <TableHead className="text-center py-3 font-semibold text-[#00a3a3] [text-shadow:_0px_0px_10px_#00a3a3]">
-                    BOTU
-                  </TableHead>
-                  <TableHead className="text-center py-3 font-semibold">
-                    MANYBOT
-                  </TableHead>
-                  <TableHead className="text-center py-3 font-semibold">
-                    FLOWXO
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-
-              <TableBody>
-                {features2.map((feat, index) => (
-                  <TableRow
-                    key={index}
-                    className="border-b border-border/30 hover:bg-muted/10 transition-colors"
+          {/* Desktop/Tablet View */}
+          <div className="hidden md:block overflow-x-auto text-sm">
+            <table className="min-w-full rounded-xl border border-border overflow-hidden shadow-sm">
+              <thead>
+                <tr className="bg-transparent backdrop-blur-md border-b border-border">
+                  <th
+                    className="py-3 px-4 text-left font-semibold cursor-pointer w-[30%]"
+                    onClick={() => requestSort("feature")}
                   >
-                    <TableCell className="py-3 font-medium">
-                      {feat.feature}
-                    </TableCell>
-
-                    <TableCell className="text-center py-3">
-                      <div className="flex items-center justify-center">
-                        <Check className="w-4 h-4 text-[#00a3a3] [text-shadow:_0px_0px_10px_#00a3a3] mr-1.5" />
-                        <span className="font-medium text-[#00a3a3] [text-shadow:_0px_0px_10px_#00a3a3]">
-                          {feat.botu}
-                        </span>
-                      </div>
-                    </TableCell>
-
-                    {/* Manybot */}
-                    <TableCell className="text-center py-3">
-                      <div className="flex items-center justify-center">
-                        {feat.manybot !== "None" &&
-                        feat.manybot !== "Limited" ? (
-                          <>
-                            <Check className="w-4 h-4 text-muted-foreground mr-1.5" />
-                            <span>{feat.manybot}</span>
-                          </>
-                        ) : (
-                          <>
-                            <X className="w-4 h-4 text-muted-foreground mr-1.5" />
+                    <div className="flex items-center">
+                      FEATURE {getSortIcon("feature")}
+                    </div>
+                  </th>
+                  <th className="py-3 px-4 text-center font-semibold w-[15%]">
+                    BOTU
+                  </th>
+                  <th
+                    className="py-3 px-4 text-center font-semibold w-[15%] cursor-pointer"
+                    onClick={() => requestSort("manybot")}
+                  >
+                    <div className="flex items-center justify-center">
+                      MANYBOT {getSortIcon("manybot")}
+                    </div>
+                  </th>
+                  <th
+                    className="py-3 px-4 text-center font-semibold w-[15%] cursor-pointer"
+                    onClick={() => requestSort("flowxo")}
+                  >
+                    <div className="flex items-center justify-center">
+                      FLOWXO {getSortIcon("flowxo")}
+                    </div>
+                  </th>
+                  <th className="py-3 px-4 text-center font-semibold w-[25%]">
+                    DETAILS
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {sortedFeatures.map((feat, index) => (
+                  <React.Fragment key={index}>
+                    <tr
+                      className={`border-b border-border hover:bg-transparent backdrop-blur-md transition-colors ${
+                        index % 2 === 0 ? "bg-transparen" : "bg-transparen"
+                      }`}
+                    >
+                      <td className="py-2 px-4 font-medium">{feat.feature}</td>
+                      <td className="py-2 px-4 text-center">
+                        <div className="flex items-center justify-center">
+                          <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
+                          <span className="font-medium">{feat.botu}</span>
+                        </div>
+                      </td>
+                      <td className="py-2 px-4 text-center">
+                        <div className="flex items-center justify-center">
+                          {feat.manybot !== "None" &&
+                          feat.manybot !== "Limited" ? (
+                            <span className="font-medium">{feat.manybot}</span>
+                          ) : (
                             <span className="text-muted-foreground">
                               {feat.manybot}
                             </span>
-                          </>
-                        )}
-                      </div>
-                    </TableCell>
-
-                    {/* FlowXO */}
-                    <TableCell className="text-center py-3">
-                      <div className="flex items-center justify-center">
-                        {feat.flowxo !== "None" &&
-                        feat.flowxo !== "Limited" &&
-                        !feat.flowxo.includes("Paid") ? (
-                          <>
-                            <Check className="w-4 h-4 text-muted-foreground mr-1.5" />
-                            <span>{feat.flowxo}</span>
-                          </>
-                        ) : (
-                          <>
-                            <X className="w-4 h-4 text-muted-foreground mr-1.5" />
+                          )}
+                        </div>
+                      </td>
+                      <td className="py-2 px-4 text-center">
+                        <div className="flex items-center justify-center">
+                          {feat.flowxo !== "None" &&
+                          feat.flowxo !== "Limited" &&
+                          !feat.flowxo.includes("Paid") ? (
+                            <span className="font-medium">{feat.flowxo}</span>
+                          ) : (
                             <span className="text-muted-foreground">
                               {feat.flowxo}
                             </span>
-                          </>
-                        )}
-                      </div>
-                    </TableCell>
-                  </TableRow>
+                          )}
+                        </div>
+                      </td>
+                      <td className="py-2 px-4 text-center">
+                        <button
+                          className="text-muted-foreground hover:text-foreground transition-colors"
+                          onClick={() => toggleExpand(index)}
+                        >
+                          <Info className="w-4 h-4 mx-auto" />
+                        </button>
+                      </td>
+                    </tr>
+                    {expandedFeature === index && (
+                      <tr className="bg-transparent backdrop-blur-md">
+                        <td
+                          colSpan={5}
+                          className="py-3 px-4 border-t border-border"
+                        >
+                          <div className="text-xs text-muted-foreground">
+                            {feat.description}
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
                 ))}
-              </TableBody>
-            </Table>
+              </tbody>
+            </table>
           </div>
 
-          <div className="mt-6 text-center text-sm text-muted-foreground">
-            All features available in our free plan with no restrictions
+          {/* Mobile View - Compact Cards */}
+          <div className="md:hidden space-y-3">
+            {sortedFeatures.map((feat, index) => (
+              <div
+                key={index}
+                className="bg-transparent backdrop-blur-md rounded-xl border border-border p-3 shadow-sm"
+              >
+                <div
+                  className="flex justify-between items-center cursor-pointer"
+                  onClick={() => toggleExpand(index)}
+                >
+                  <h3 className="font-semibold text-sm">{feat.feature}</h3>
+                  <button className="text-muted-foreground">
+                    {expandedFeature === index ? (
+                      <ChevronUp className="w-4 h-4" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4" />
+                    )}
+                  </button>
+                </div>
+
+                {expandedFeature === index && (
+                  <div className="mt-2 text-xs text-muted-foreground">
+                    {feat.description}
+                  </div>
+                )}
+
+                <div className="grid grid-cols-3 gap-2 mt-3">
+                  <div className="text-center">
+                    <div className="text-[10px] text-muted-foreground mb-1">
+                      BOTU
+                    </div>
+                    <div className="flex items-center justify-center">
+                      <div className="w-2 h-2 rounded-full bg-green-500 mr-1"></div>
+                      <span className="text-xs font-medium">{feat.botu}</span>
+                    </div>
+                  </div>
+
+                  <div className="text-center">
+                    <div className="text-[10px] text-muted-foreground mb-1">
+                      MANYBOT
+                    </div>
+                    <div>
+                      {feat.manybot !== "None" && feat.manybot !== "Limited" ? (
+                        <span className="text-xs font-medium">
+                          {feat.manybot}
+                        </span>
+                      ) : (
+                        <span className="text-xs text-muted-foreground">
+                          {feat.manybot}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="text-center">
+                    <div className="text-[10px] text-muted-foreground mb-1">
+                      FLOWXO
+                    </div>
+                    <div>
+                      {feat.flowxo !== "None" &&
+                      feat.flowxo !== "Limited" &&
+                      !feat.flowxo.includes("Paid") ? (
+                        <span className="text-xs font-medium">
+                          {feat.flowxo}
+                        </span>
+                      ) : (
+                        <span className="text-xs text-muted-foreground">
+                          {feat.flowxo}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Summary Section */}
+          <div className="mt-8 p-4 border border-border rounded-xl bg-transparent backdrop-blur-md grid grid-cols-3 gap-4 text-center">
+            <div>
+              <div className="text-sm font-bold mb-1">100%</div>
+              <div className="text-xs text-muted-foreground">
+                Feature Coverage
+              </div>
+            </div>
+            <div>
+              <div className="text-sm font-bold mb-1">24/7</div>
+              <div className="text-xs text-muted-foreground">Support</div>
+            </div>
+            <div>
+              <div className="text-sm font-bold mb-1">$0</div>
+              <div className="text-xs text-muted-foreground">
+                Free Tier Cost
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-4 text-center text-xs text-muted-foreground">
+            All premium features available in our free plan with no restrictions
           </div>
         </div>
       </div>
 
-      <div className="Section-5 py-16">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="text-center mb-12">
+      <div className="Section-5 py-16 bg-transparent">
+        <div className="container mx-auto px-4 max-w-6xl bg-transparent">
+          <div className="text-center mb-12 bg-transparen">
             <h1 className="text-4xl font-bold mb-4">Who is BotU for?</h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               BotU is built to empower creators, communities, and businesses of
@@ -427,7 +580,7 @@ export default function Landing() {
             {audience.map((item, index) => (
               <Card
                 key={index}
-                className="border-2 rounded-lg shadow-sm transition-all duration-300 transform-gpu hover:scale-[1.03] hover:border-primary-foreground hover:shadow-sm"
+                className="border-2 rounded-lg shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu hover:scale-[1.03] hover:border-primary-foreground hover:shadow-sm"
               >
                 <CardHeader className="pb-3">
                   <div className="text-3xl mb-3">{item.icon}</div>
@@ -440,7 +593,7 @@ export default function Landing() {
             ))}
           </div>
 
-          <div className="text-center max-w-2xl mx-auto">
+          <div className="text-center max-w-2xl mx-auto bg-transparent">
             <p className="text-lg mb-6">
               Whether you're a solo creator or part of a large team, BotU gives
               you everything you need to launch smart Telegram bots without
