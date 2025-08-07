@@ -11,7 +11,6 @@ import {
   SheetTrigger
 } from "@/components/ui/sheet";
 import GlassSurface from "./GlassSurface/GlassSurface";
-import LanguageSwitch from "./LanguageSwitch";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const mainNavItems = [
@@ -37,7 +36,7 @@ function Navbar() {
         blueOffset={20}
         brightness={66}
         opacity={1}
-        backgroundOpacity={0.2}
+        backgroundOpacity={0.5}
         mixBlendMode="screen"
         borderRadius={9999}
         className="mb-4 w-full max-w-4xl"
@@ -69,7 +68,6 @@ function Navbar() {
 
             {/* Special buttons with custom styling */}
             <div className="flex gap-1 items-center">
-              <LanguageSwitch />
               {specialNavItems.map(({ label, to }) => (
                 <div key={to}>
                   <Button
@@ -104,7 +102,6 @@ function Navbar() {
 
           {/* Mobile Menu Trigger */}
           <div className="md:hidden flex items-center gap-2">
-            <LanguageSwitch />
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="rounded-full">
