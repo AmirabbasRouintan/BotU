@@ -54,7 +54,11 @@ import {
   Brain,
   Cpu,
   Bot,
-  MessageSquare
+  MessageSquare,
+  Bell,
+  LifeBuoy,
+  HelpCircle,
+  Sparkles
 } from "lucide-react";
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -88,14 +92,14 @@ export default function Template() {
   const [loading, setLoading] = useState(true);
   const [commands, setCommands] = useState<ColumnData[]>(initialCommands);
   const [bot, setBot] = useState<ColumnData[]>(initialBot);
-  const [activeTab, setActiveTab] = useState("commands");
-  
+  const [activeTab, setActiveTab] = useState("dashboard");
+
   useEffect(() => {
     // Show skeleton for 3.5 seconds
     const timer = setTimeout(() => {
       setLoading(false);
     }, 3500);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -109,20 +113,20 @@ export default function Template() {
           <Skeleton className="h-4 rounded-md w-5/6" />
           <Skeleton className="h-4 rounded-md w-2/3" />
         </div>
-        
+
         {/* Grid of cards skeleton */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
           {[...Array(3)].map((_, i) => (
             <Skeleton key={i} className="h-40 rounded-xl" />
           ))}
         </div>
-        
+
         {/* Additional content skeleton */}
         <Skeleton className="h-10 w-32 rounded-md mt-6" />
       </div>
     </div>
   );
-  
+
   if (loading) {
     return <LoadingSkeleton />;
   }
@@ -146,8 +150,8 @@ export default function Template() {
     });
   };
 
-  // Commands Tab Component
-  const CommandsTab = () => (
+  // Dashboard Tab Component
+  const DashboardTab = () => (
     <div className="flex flex-col md:flex-row gap-4">
       {/* Commands Section */}
       <section className="flex-1 flex flex-col rounded-3xl px-4 py-3 overflow-hidden bg-[var(--card)] backdrop-blur-[20px] border border-[var(--border)]">
@@ -245,8 +249,8 @@ export default function Template() {
     </div>
   );
 
-  // API Tab Component
-  const APITab = () => (
+  // My Bots Tab Component
+  const MyBotsTab = () => (
     <Card className="bg-[#85858510] backdrop-blur-xl rounded-2xl border border-border shadow-xl">
       <CardHeader className="flex flex-col md:flex-row items-start justify-between">
         <div>
@@ -952,171 +956,512 @@ export default function Template() {
     </Card>
   );
 
-  // Edit Tab Component
-  const EditTab = () => (
-    <div className="max-w-5xl mx-auto grid gap-6 p-2 sm:p-4 md:p-6">
-      {/* Header */}
-      <header className="text-center">
-        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-sky-300 to-indigo-400">
-          Edit Your Bot
-        </h1>
-        <p className="mt-2 text-white/70 max-w-md mx-auto">
-          Fine-tune personality, triggers, and responses.
-        </p>
-      </header>
+  // Settings Tab Component
+  const SettingsTab = () => (
+    <Card className="bg-[#85858510] backdrop-blur-xl rounded-2xl border border-border shadow-xl">
+      <CardHeader>
+        <CardTitle className="flex items-center">
+          <Cog className="mr-2 h-5 w-5" />
+          Account Settings
+        </CardTitle>
+        <CardDescription>
+          Manage your account preferences and security
+        </CardDescription>
+      </CardHeader>
 
-      {/* Two-column layout */}
-      <main className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Left – Avatar & Identity */}
-        <section className="md:col-span-1 flex flex-col gap-6">
-          {/* Avatar */}
-          <div className="group relative rounded-2xl overflow-hidden bg-gradient-to-br from-sky-400/20 to-indigo-500/20 border border-white/10 backdrop-blur p-6">
-            <div className="aspect-square w-32 mx-auto rounded-full bg-gradient-to-br from-slate-700 to-slate-900 border-4 border-white/20 flex items-center justify-center">
-              <span className="text-4xl font-black text-white/40">:)</span>
-            </div>
-            <label className="absolute inset-0 cursor-pointer opacity-0 group-hover:opacity-100 transition duration-300 bg-black/40 flex items-center justify-center">
-              <input type="file" className="sr-only" accept="image/*" />
-              <span className="text-sm font-semibold text-white/90">
-                Upload
-              </span>
-            </label>
-          </div>
+      <CardContent className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Profile Settings */}
+          <Card className="bg-[#0000005b] backdrop-blur border-border">
+            <CardHeader>
+              <CardTitle>Profile Information</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div>
+                  <Label>Username</Label>
+                  <Input defaultValue="user123" />
+                </div>
+                <div>
+                  <Label>Email</Label>
+                  <Input defaultValue="user@example.com" type="email" />
+                </div>
+                <div>
+                  <Label>Timezone</Label>
+                  <Input defaultValue="UTC+00:00" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-          {/* Identity Card */}
-          <div className="rounded-2xl bg-white/5 border border-white/10 backdrop-blur p-5 space-y-4">
-            <h3 className="text-lg font-semibold text-white/90">Identity</h3>
+          {/* Security Settings */}
+          <Card className="bg-[#0000005b] backdrop-blur border-border">
+            <CardHeader>
+              <CardTitle>Security</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div>
+                  <Label>Password</Label>
+                  <Input type="password" placeholder="••••••••" />
+                </div>
+                <div>
+                  <Label>Two-Factor Authentication</Label>
+                  <div className="flex items-center justify-between mt-1">
+                    <span className="text-sm">Disabled</span>
+                    <Switch />
+                  </div>
+                </div>
+                <div>
+                  <Label>Active Sessions</Label>
+                  <div className="flex items-center justify-between mt-1">
+                    <span className="text-sm">2 active sessions</span>
+                    <Button variant="outline" size="sm">
+                      View
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* API Keys */}
+        <Card className="bg-[#0000005b] backdrop-blur border-border">
+          <CardHeader>
+            <CardTitle>API Keys</CardTitle>
+            <CardDescription>
+              Manage keys for accessing our API services
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Created</TableHead>
+                  <TableHead>Last Used</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>Production Key</TableCell>
+                  <TableCell>Jan 12, 2024</TableCell>
+                  <TableCell>Today</TableCell>
+                  <TableCell>
+                    <Badge
+                      variant="outline"
+                      className="bg-green-500/20 text-green-500"
+                    >
+                      Active
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <Button variant="ghost" size="sm" className="mr-2">
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button variant="ghost" size="sm" className="text-red-500">
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Development Key</TableCell>
+                  <TableCell>Mar 5, 2024</TableCell>
+                  <TableCell>Apr 2, 2024</TableCell>
+                  <TableCell>
+                    <Badge
+                      variant="outline"
+                      className="bg-yellow-500/20 text-yellow-500"
+                    >
+                      Inactive
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <Button variant="ghost" size="sm" className="mr-2">
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button variant="ghost" size="sm" className="text-red-500">
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+            <Button className="mt-4 gap-2">
+              <Plus className="h-4 w-4" />
+              Create New API Key
+            </Button>
+          </CardContent>
+        </Card>
+      </CardContent>
+    </Card>
+  );
+
+  // Notification Tab Component
+  const NotificationTab = () => (
+    <Card className="bg-[#85858510] backdrop-blur-xl rounded-2xl border border-border shadow-xl">
+      <CardHeader>
+        <CardTitle className="flex items-center">
+          <Bell className="mr-2 h-5 w-5" />
+          Notification Settings
+        </CardTitle>
+        <CardDescription>
+          Configure how and when you receive notifications
+        </CardDescription>
+      </CardHeader>
+
+      <CardContent className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Email Notifications */}
+          <Card className="bg-[#0000005b] backdrop-blur border-border">
+            <CardHeader>
+              <CardTitle>Email Notifications</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <Label>Bot Status Updates</Label>
+                  <Switch defaultChecked />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label>New Messages</Label>
+                  <Switch defaultChecked />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label>Monthly Reports</Label>
+                  <Switch />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label>Security Alerts</Label>
+                  <Switch defaultChecked />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* In-App Notifications */}
+          <Card className="bg-[#0000005b] backdrop-blur border-border">
+            <CardHeader>
+              <CardTitle>In-App Notifications</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <Label>New Features</Label>
+                  <Switch defaultChecked />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label>Maintenance Alerts</Label>
+                  <Switch defaultChecked />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label>Usage Limits</Label>
+                  <Switch defaultChecked />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label>Community Updates</Label>
+                  <Switch />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Notification Preferences */}
+        <Card className="bg-[#0000005b] backdrop-blur border-border">
+          <CardHeader>
+            <CardTitle>Notification Preferences</CardTitle>
+          </CardHeader>
+          <CardContent>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-white/70 mb-1">
-                  Bot Name
-                </label>
-                <input
-                  type="text"
-                  defaultValue="MyBot"
-                  className="w-full bg-white/10 rounded-lg px-3 py-2 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-white/70 mb-1">
-                  Short Description
-                </label>
-                <textarea
-                  rows={3}
-                  placeholder="A helpful assistant..."
-                  className="w-full bg-white/10 rounded-lg px-3 py-2 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition resize-none"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Right – Triggers & Responses */}
-        <section className="md:col-span-2 flex flex-col gap-6">
-          {/* Triggers */}
-          <div className="rounded-2xl bg-white/5 border border-white/10 backdrop-blur p-5">
-            <h3 className="text-lg font-semibold text-white/90 mb-4">
-              Triggers
-            </h3>
-            <div className="space-y-3">
-              {["/start", "/help", "/joke"].map((t) => (
-                <div
-                  key={t}
-                  className="group flex items-center gap-3 bg-white/5 rounded-xl px-3 py-2 transition hover:bg-white/10"
-                >
-                  <span className="font-mono text-sm text-sky-300">{t}</span>
-                  <button className="ml-auto text-white/40 group-hover:text-white/90 transition">
-                    ✕
-                  </button>
+                <Label>Notification Sound</Label>
+                <div className="grid grid-cols-3 gap-2 mt-2">
+                  <Button variant="outline">Chime</Button>
+                  <Button variant="default">Bell</Button>
+                  <Button variant="outline">None</Button>
                 </div>
-              ))}
-              <button className="w-full flex items-center justify-center gap-2 text-sm text-sky-300 border border-dashed border-sky-400/30 rounded-xl py-2 hover:border-solid hover:bg-sky-400/10 transition">
-                + Add trigger
-              </button>
+              </div>
+
+              <div>
+                <Label>Do Not Disturb Hours</Label>
+                <div className="flex items-center gap-4 mt-2">
+                  <Input type="time" defaultValue="22:00" />
+                  <span>to</span>
+                  <Input type="time" defaultValue="08:00" />
+                </div>
+              </div>
+
+              <div>
+                <Label>Desktop Notifications</Label>
+                <div className="grid grid-cols-3 gap-2 mt-2">
+                  <Button variant="outline">Enabled</Button>
+                  <Button variant="default">Only when active</Button>
+                  <Button variant="outline">Disabled</Button>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </CardContent>
+    </Card>
+  );
+
+  // Help Tab Component
+  const HelpTab = () => (
+    <Card className="bg-[#85858510] backdrop-blur-xl rounded-2xl border border-border shadow-xl">
+      <CardHeader>
+        <CardTitle className="flex items-center">
+          <HelpCircle className="mr-2 h-5 w-5" />
+          Help Center
+        </CardTitle>
+        <CardDescription>
+          Find answers to common questions and issues
+        </CardDescription>
+      </CardHeader>
+
+      <CardContent className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Card className="bg-[#0000005b] backdrop-blur border-border cursor-pointer hover:border-primary transition-colors">
+            <CardHeader>
+              <CardTitle className="text-lg">Getting Started</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">
+                Learn how to set up your first bot
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-[#0000005b] backdrop-blur border-border cursor-pointer hover:border-primary transition-colors">
+            <CardHeader>
+              <CardTitle className="text-lg">Command Reference</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">
+                Complete guide to available commands
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-[#0000005b] backdrop-blur border-border cursor-pointer hover:border-primary transition-colors">
+            <CardHeader>
+              <CardTitle className="text-lg">Troubleshooting</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">
+                Solutions for common problems
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
+        <Separator />
+
+        <div>
+          <h3 className="text-lg font-semibold mb-4">
+            Frequently Asked Questions
+          </h3>
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium">How do I create a new bot?</h4>
+              <p className="text-muted-foreground text-sm mt-1">
+                Go to the "My Bots" section and click "Create New Bot". Follow
+                the setup wizard to configure your bot.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-medium">How do I add custom commands?</h4>
+              <p className="text-muted-foreground text-sm mt-1">
+                Navigate to the bot's settings, then to the "Commands" section.
+                Click "Add Command" and configure your command.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-medium">How can I integrate with Discord?</h4>
+              <p className="text-muted-foreground text-sm mt-1">
+                Use the Discord integration guide in our documentation. You'll
+                need to create a Discord application and configure OAuth.
+              </p>
             </div>
           </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
 
-          {/* Responses */}
-          <div className="rounded-2xl bg-white/5 border border-white/10 backdrop-blur p-5">
-            <h3 className="text-lg font-semibold text-white/90 mb-4">
-              Responses
-            </h3>
-            <div className="space-y-3">
-              {["Hello! How can I help?", "Here's a joke for you 😄"].map(
-                (r) => (
-                  <div
-                    key={r}
-                    className="group bg-white/5 rounded-xl px-3 py-3 transition hover:bg-white/10"
-                  >
-                    <p className="text-sm text-white/80">{r}</p>
-                    <div className="flex gap-2 mt-2">
-                      <button className="text-xs px-2 py-1 bg-sky-500/10 text-sky-300 rounded-md hover:bg-sky-500/20 transition">
-                        Edit
-                      </button>
-                      <button className="text-xs px-2 py-1 bg-red-500/10 text-red-300 rounded-md hover:bg-red-500/20 transition">
-                        Delete
-                      </button>
-                    </div>
+  // Support Tab Component
+  const SupportTab = () => (
+    <Card className="bg-[#85858510] backdrop-blur-xl rounded-2xl border border-border shadow-xl">
+      <CardHeader>
+        <CardTitle className="flex items-center">
+          <LifeBuoy className="mr-2 h-5 w-5" />
+          Support Center
+        </CardTitle>
+        <CardDescription>
+          Contact our support team for assistance
+        </CardDescription>
+      </CardHeader>
+
+      <CardContent className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Contact Form */}
+          <Card className="bg-[#0000005b] backdrop-blur border-border">
+            <CardHeader>
+              <CardTitle>Contact Support</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div>
+                  <Label>Subject</Label>
+                  <Input placeholder="Briefly describe your issue" />
+                </div>
+                <div>
+                  <Label>Description</Label>
+                  <Textarea
+                    placeholder="Please describe your issue in detail..."
+                    rows={5}
+                  />
+                </div>
+                <div>
+                  <Label>Attachments</Label>
+                  <div className="border border-dashed rounded-lg p-4 text-center cursor-pointer hover:bg-muted/10 transition-colors">
+                    <Plus className="h-6 w-6 mx-auto text-muted-foreground" />
+                    <p className="text-sm text-muted-foreground mt-2">
+                      Click to add screenshots or files
+                    </p>
                   </div>
-                )
-              )}
-              <button className="w-full flex items-center justify-center gap-2 text-sm text-indigo-300 border border-dashed border-indigo-400/30 rounded-xl py-2 hover:border-solid hover:bg-indigo-400/10 transition">
-                + Add response
-              </button>
+                </div>
+                <Button className="w-full">Submit Request</Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Support Information */}
+          <Card className="bg-[#0000005b] backdrop-blur border-border">
+            <CardHeader>
+              <CardTitle>Support Resources</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-medium">Community Forum</h4>
+                  <p className="text-muted-foreground text-sm mt-1">
+                    Connect with other developers and get help from the
+                    community
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-medium">Documentation</h4>
+                  <p className="text-muted-foreground text-sm mt-1">
+                    Comprehensive guides and API references
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-medium">Status Page</h4>
+                  <p className="text-muted-foreground text-sm mt-1">
+                    Check system status and incident reports
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-medium">Live Chat</h4>
+                  <p className="text-muted-foreground text-sm mt-1">
+                    Available Monday-Friday, 9AM-5PM EST
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
+  // AI Help Tab Component
+  const AIHelpTab = () => (
+    <Card className="bg-[#85858510] backdrop-blur-xl rounded-2xl border border-border shadow-xl">
+      <CardHeader>
+        <CardTitle className="flex items-center">
+          <Sparkles className="mr-2 h-5 w-5" />
+          AI Assistant
+        </CardTitle>
+        <CardDescription>
+          Get instant help from our AI-powered assistant
+        </CardDescription>
+      </CardHeader>
+
+      <CardContent>
+        <div className="bg-muted/20 rounded-lg p-4 h-96 overflow-y-auto">
+          <div className="space-y-4">
+            <div className="flex">
+              <Avatar className="mr-2 h-6 w-6">
+                <AvatarFallback>AI</AvatarFallback>
+              </Avatar>
+              <div className="bg-secondary text-secondary-foreground rounded-xl p-3 max-w-[80%]">
+                Hi there! I'm your AI assistant. How can I help you today? You
+                can ask me about:
+                <ul className="list-disc pl-5 mt-2">
+                  <li>Setting up your bot</li>
+                  <li>Troubleshooting issues</li>
+                  <li>API documentation</li>
+                  <li>Best practices</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="flex justify-end">
+              <div className="bg-primary text-primary-foreground rounded-xl p-3 max-w-[80%]">
+                How do I create a new command?
+              </div>
+            </div>
+
+            <div className="flex">
+              <Avatar className="mr-2 h-6 w-6">
+                <AvatarFallback>AI</AvatarFallback>
+              </Avatar>
+              <div className="bg-secondary text-secondary-foreground rounded-xl p-3 max-w-[80%]">
+                To create a new command:
+                <ol className="list-decimal pl-5 mt-2">
+                  <li>Go to the "My Bots" section</li>
+                  <li>Select your bot</li>
+                  <li>Navigate to "Custom Commands"</li>
+                  <li>Click "Add Command"</li>
+                  <li>Fill in the command details</li>
+                  <li>Save your changes</li>
+                </ol>
+                Would you like me to show you step-by-step?
+              </div>
             </div>
           </div>
+        </div>
 
-          {/* Save / Discard */}
-          <footer className="flex gap-3 justify-end">
-            <button className="px-5 py-2 text-sm rounded-xl bg-white/10 text-white/90 hover:bg-white/20 transition">
-              Discard
-            </button>
-            <button className="px-5 py-2 text-sm rounded-xl bg-gradient-to-r from-indigo-500 to-sky-500 text-white font-semibold hover:from-indigo-600 hover:to-sky-600 transition shadow-lg shadow-indigo-500/25">
-              Save Changes
-            </button>
-          </footer>
-        </section>
-      </main>
-    </div>
-  );
+        <div className="flex gap-2 mt-4">
+          <Input placeholder="Ask a question..." />
+          <Button>Send</Button>
+        </div>
 
-  // Settings Tab Component (Placeholder)
-  const SettingsTab = () => (
-    <div className="p-6 bg-card rounded-lg border">
-      <h2 className="text-2xl font-bold mb-4">Bot Settings</h2>
-      <p className="text-muted-foreground">
-        Settings configuration will be implemented here.
-      </p>
-    </div>
-  );
-
-  // Payment Tab Component (Placeholder)
-  const PaymentTab = () => (
-    <div className="p-6 bg-card rounded-lg border">
-      <h2 className="text-2xl font-bold mb-4">Payment Configuration</h2>
-      <p className="text-muted-foreground">
-        Payment settings will be implemented here.
-      </p>
-    </div>
-  );
-
-  // Transfer Ownership Tab Component (Placeholder)
-  const TransferOwnershipTab = () => (
-    <div className="p-6 bg-card rounded-lg border">
-      <h2 className="text-2xl font-bold mb-4">Transfer Ownership</h2>
-      <p className="text-muted-foreground">
-        Transfer ownership functionality will be implemented here.
-      </p>
-    </div>
-  );
-
-  // Delete Bot Tab Component (Placeholder)
-  const DeleteBotTab = () => (
-    <div className="p-6 bg-card rounded-lg border">
-      <h2 className="text-2xl font-bold mb-4">Delete Bot</h2>
-      <p className="text-muted-foreground">
-        Bot deletion functionality will be implemented here.
-      </p>
-    </div>
+        <div className="mt-6">
+          <h3 className="font-medium mb-2">Quick Questions</h3>
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline" size="sm">
+              How to add permissions?
+            </Button>
+            <Button variant="outline" size="sm">
+              API rate limits
+            </Button>
+            <Button variant="outline" size="sm">
+              Discord integration
+            </Button>
+            <Button variant="outline" size="sm">
+              Troubleshoot errors
+            </Button>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 
   return (
@@ -1130,46 +1475,46 @@ export default function Template() {
           {/* Scrollable tabs for mobile */}
           <TabsList className="w-auto flex flex-row md:flex-col overflow-auto items-center justify-start pb-0 pt-1 pl-1 pr-1 md:p-2 md:mx-2 mx-0 bg-[#85858510] backdrop-blur border border-border shadow-xl rounded-xl transparent-scrollbar">
             <TabsTrigger
-              value="commands"
+              value="dashboard"
               className="px-3 py-2 text-sm md:text-base md:text-left"
             >
-              Commands
+              Dashboard
             </TabsTrigger>
             <TabsTrigger
-              value="api"
+              value="mybots"
               className="px-3 py-2 text-sm md:text-base md:text-left"
             >
-              API Token
-            </TabsTrigger>
-            <TabsTrigger
-              value="edit"
-              className="px-3 py-2 text-sm md:text-base md:text-left"
-            >
-              Edit Bot
+              My Bots
             </TabsTrigger>
             <TabsTrigger
               value="settings"
               className="px-3 py-2 text-sm md:text-base md:text-left"
             >
-              Bot Settings
+              Settings
             </TabsTrigger>
             <TabsTrigger
-              value="payment"
+              value="notification"
               className="px-3 py-2 text-sm md:text-base md:text-left"
             >
-              Payments
+              Notification
             </TabsTrigger>
             <TabsTrigger
-              value="transfareowner"
+              value="help"
               className="px-3 py-2 text-sm md:text-base md:text-left"
             >
-              Transfer Ownership
+              Help
             </TabsTrigger>
             <TabsTrigger
-              value="delete"
+              value="support"
+              className="px-3 py-2 text-sm md:text-base md:text-left"
+            >
+              Support
+            </TabsTrigger>
+            <TabsTrigger
+              value="aihelp"
               className="px-3 py-2 mb-auto text-sm md:text-base md:text-left"
             >
-              Delete
+              AI Help
             </TabsTrigger>
           </TabsList>
 
@@ -1179,26 +1524,26 @@ export default function Template() {
               <LoadingSkeleton />
             ) : (
               <>
-                <TabsContent value="commands">
-                  <CommandsTab />
+                <TabsContent value="dashboard">
+                  <DashboardTab />
                 </TabsContent>
-                <TabsContent value="api">
-                  <APITab />
-                </TabsContent>
-                <TabsContent value="edit">
-                  <EditTab />
+                <TabsContent value="mybots">
+                  <MyBotsTab />
                 </TabsContent>
                 <TabsContent value="settings">
                   <SettingsTab />
                 </TabsContent>
-                <TabsContent value="payment">
-                  <PaymentTab />
+                <TabsContent value="notification">
+                  <NotificationTab />
                 </TabsContent>
-                <TabsContent value="transfareowner">
-                  <TransferOwnershipTab />
+                <TabsContent value="help">
+                  <HelpTab />
                 </TabsContent>
-                <TabsContent value="delete">
-                  <DeleteBotTab />
+                <TabsContent value="support">
+                  <SupportTab />
+                </TabsContent>
+                <TabsContent value="aihelp">
+                  <AIHelpTab />
                 </TabsContent>
               </>
             )}

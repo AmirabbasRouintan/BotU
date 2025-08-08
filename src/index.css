@@ -138,6 +138,7 @@
   body {
     @apply bg-background text-foreground;
   }
+  
   :root {
     --color-kanban-board-circle-blue: var(--kanban-board-circle-blue);
     --color-kanban-board-circle-cyan: var(--kanban-board-circle-cyan);
@@ -150,6 +151,22 @@
     --color-kanban-board-circle-red: var(--kanban-board-circle-red);
     --color-kanban-board-circle-violet: var(--kanban-board-circle-violet);
     --color-kanban-board-circle-yellow: var(--kanban-board-circle-yellow);
+  }
+  
+  label {
+    @apply block mb-2 text-sm font-medium;
+  }
+  
+  input, textarea, select {
+    @apply mb-4;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply mb-3;
+  }
+  
+  p {
+    @apply mb-4;
   }
 }
 
