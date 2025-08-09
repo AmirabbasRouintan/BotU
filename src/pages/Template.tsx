@@ -1,18 +1,5 @@
 import { useState, useEffect } from "react";
 import {
-  KanbanBoard,
-  KanbanBoardProvider,
-  KanbanBoardColumn,
-  KanbanBoardColumnHeader,
-  KanbanBoardColumnTitle,
-  KanbanBoardColumnList,
-  KanbanBoardColumnListItem,
-  KanbanBoardCard,
-  KanbanBoardCardTitle
-} from "@/components/kanban";
-
-// UI Components
-import {
   Card,
   CardHeader,
   CardTitle,
@@ -58,7 +45,8 @@ import {
   Bell,
   LifeBuoy,
   HelpCircle,
-  Sparkles
+  Sparkles,
+  ChevronRight
 } from "lucide-react";
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -66,6 +54,33 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 // Types
 type Card = { id: string; title: string };
 type ColumnData = { id: string; title: string; cards: Card[] };
+
+// Define types for our components
+type StatCardProps = {
+  title: string;
+  value: string | number;
+  icon: React.ReactNode;
+  change: string;
+  color: string;
+};
+
+type BotStatusItemProps = {
+  name: string;
+  status: string;
+  color: string;
+  initials: string;
+};
+
+type ChartLegendProps = {
+  color: string;
+  label: string;
+};
+
+type QuickActionProps = {
+  icon: React.ReactNode;
+  label: string;
+  color: string;
+};
 
 // Initial data
 const initialCommands: ColumnData[] = [
@@ -79,19 +94,10 @@ const initialCommands: ColumnData[] = [
   }
 ];
 
-const initialBot: ColumnData[] = [
-  {
-    id: "responses",
-    title: "Bot Replies",
-    cards: [{ id: "3", title: "Hello! How can I help?" }]
-  }
-];
-
 // Main Component
 export default function Template() {
   const [loading, setLoading] = useState(true);
-  const [commands, setCommands] = useState<ColumnData[]>(initialCommands);
-  const [bot, setBot] = useState<ColumnData[]>(initialBot);
+  const [commands] = useState<ColumnData[]>(initialCommands);
   const [activeTab, setActiveTab] = useState("dashboard");
 
   useEffect(() => {
@@ -132,121 +138,269 @@ export default function Template() {
   }
 
   // Move card between columns
-  const moveCardToColumn = (
-    cardData: string,
-    targetColumnId: string,
-    setFn: React.Dispatch<React.SetStateAction<ColumnData[]>>
-  ) => {
-    const card = JSON.parse(cardData) as Card;
-
-    setFn((prev) => {
-      const filtered = prev.map((col) => ({
-        ...col,
-        cards: col.cards.filter((c) => c.id !== card.id)
-      }));
-      const target = filtered.find((col) => col.id === targetColumnId);
-      if (target) target.cards.push(card);
-      return filtered;
-    });
-  };
 
   // Dashboard Tab Component
   const DashboardTab = () => (
-    <div className="flex flex-col md:flex-row gap-4">
-      {/* Commands Section */}
-      <section className="flex-1 flex flex-col rounded-3xl px-4 py-3 overflow-hidden bg-[var(--card)] backdrop-blur-[20px] border border-[var(--border)]">
-        <h2 className="text-xl font-semibold mb-4 text-[var(--foreground)]">
-          Commands
-        </h2>
-        <KanbanBoardProvider>
-          <KanbanBoard className="flex flex-col md:flex-row gap-4 overflow-x-auto">
-            {commands.map((column) => (
-              <KanbanBoardColumn
-                key={column.id}
-                columnId={column.id}
-                className="min-w-[280px] h-full w-full bg-[var(--muted)]/10 backdrop-blur-md rounded-2xl px-1 border border-[var(--border)]"
-                onDropOverColumn={(data) =>
-                  moveCardToColumn(data, column.id, setCommands)
-                }
-              >
-                <KanbanBoardColumnHeader>
-                  <KanbanBoardColumnTitle columnId={column.id}>
-                    {column.title}
-                  </KanbanBoardColumnTitle>
-                </KanbanBoardColumnHeader>
-                <KanbanBoardColumnList className="flex-grow overflow-y-auto max-h-[400px]">
-                  {column.cards.map((card) => (
-                    <KanbanBoardColumnListItem
-                      key={card.id}
-                      cardId={card.id}
-                      onDropOverListItem={(data) =>
-                        moveCardToColumn(data, column.id, setCommands)
-                      }
-                    >
-                      <KanbanBoardCard
-                        data={card}
-                        className="bg-[var(--muted)]/10 backdrop-blur-sm rounded-lg text-[var(--foreground)]"
-                      >
-                        <KanbanBoardCardTitle>
-                          {card.title}
-                        </KanbanBoardCardTitle>
-                      </KanbanBoardCard>
-                    </KanbanBoardColumnListItem>
-                  ))}
-                </KanbanBoardColumnList>
-              </KanbanBoardColumn>
-            ))}
-          </KanbanBoard>
-        </KanbanBoardProvider>
-      </section>
+    <div className="flex flex-col gap-4">
+      {/* Stats Cards - Compact */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <StatCard
+          title="Total Bots"
+          value="7"
+          icon={<Bot className="h-4 w-4" />}
+          change="+2 this month"
+          color="bg-green-500/20 text-green-500"
+        />
+        <StatCard
+          title="Active Commands"
+          value="24"
+          icon={<Terminal className="h-4 w-4" />}
+          change="+5 this week"
+          color="bg-blue-500/20 text-blue-500"
+        />
+        <StatCard
+          title="User Interactions"
+          value="1.2K"
+          icon={<MessageSquare className="h-4 w-4" />}
+          change="+120 today"
+          color="bg-purple-500/20 text-purple-500"
+        />
+        <StatCard
+          title="Success Rate"
+          value="94%"
+          icon={<Check className="h-4 w-4" />}
+          change="+3% from last month"
+          color="bg-amber-500/20 text-amber-500"
+        />
+      </div>
 
-      {/* Bot Section */}
-      <section className="flex-1 flex flex-col rounded-3xl px-4 py-3 overflow-hidden bg-[var(--card)] backdrop-blur-[20px] border border-[var(--border)] mt-4 md:mt-0">
-        <h2 className="text-xl font-semibold mb-4 text-[var(--foreground)]">
-          Bot
-        </h2>
-        <KanbanBoardProvider>
-          <KanbanBoard className="flex flex-col md:flex-row gap-4 overflow-x-auto">
-            {bot.map((column) => (
-              <KanbanBoardColumn
-                key={column.id}
-                columnId={column.id}
-                className="min-w-[280px] h-full w-full bg-[var(--muted)]/10 backdrop-blur-md rounded-2xl px-1 border border-[var(--border)]"
-                onDropOverColumn={(data) =>
-                  moveCardToColumn(data, column.id, setBot)
-                }
-              >
-                <KanbanBoardColumnHeader>
-                  <KanbanBoardColumnTitle columnId={column.id}>
-                    {column.title}
-                  </KanbanBoardColumnTitle>
-                </KanbanBoardColumnHeader>
-                <KanbanBoardColumnList className="flex-grow overflow-y-auto max-h-[400px]">
-                  {column.cards.map((card) => (
-                    <KanbanBoardColumnListItem
-                      key={card.id}
-                      cardId={card.id}
-                      onDropOverListItem={(data) =>
-                        moveCardToColumn(data, column.id, setBot)
-                      }
-                    >
-                      <KanbanBoardCard
-                        data={card}
-                        className="bg-[var(--muted)]/10 backdrop-blur-sm rounded-lg text-[var(--foreground)]"
-                      >
-                        <KanbanBoardCardTitle>
-                          {card.title}
-                        </KanbanBoardCardTitle>
-                      </KanbanBoardCard>
-                    </KanbanBoardColumnListItem>
-                  ))}
-                </KanbanBoardColumnList>
-              </KanbanBoardColumn>
-            ))}
-          </KanbanBoard>
-        </KanbanBoardProvider>
-      </section>
+      {/* Main Content - Activity and Bots */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {/* Activity Feed - More Compact */}
+        <Card className="lg:col-span-2 bg-[#ffffff08] backdrop-blur border border-border/30">
+          <CardHeader className="p-4 pb-2">
+            <CardTitle className="text-base flex items-center">
+              <List className="mr-2 h-4 w-4 text-primary" />
+              Recent Activity
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-2">
+            <div className="space-y-2 max-h-64 overflow-y-auto">
+              {[...Array(5)].map((_, i) => (
+                <div
+                  key={i}
+                  className="flex items-start p-2 rounded hover:bg-muted/20 transition-colors"
+                >
+                  <div className="bg-primary/10 p-1.5 rounded-full mr-2 mt-0.5">
+                    <Edit className="h-3 w-3 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex justify-between items-start">
+                      <h4 className="text-sm font-medium">
+                        Updated command settings
+                      </h4>
+                      <span className="text-xs text-muted-foreground whitespace-nowrap">
+                        2h ago
+                      </span>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Modified response for /help command in MyBot
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Bot Status - More Compact */}
+        <Card className="bg-[#ffffff08] backdrop-blur border border-border/30">
+          <CardHeader className="p-4 pb-2">
+            <CardTitle className="text-base flex items-center">
+              <Bot className="mr-2 h-4 w-4 text-primary" />
+              Bot Status
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-2">
+            <div className="space-y-2">
+              <BotStatusItem
+                name="MyBot"
+                status="Online"
+                color="bg-green-500"
+                initials="MB"
+              />
+              <BotStatusItem
+                name="SupportBot"
+                status="Online"
+                color="bg-green-500"
+                initials="SB"
+              />
+              <BotStatusItem
+                name="AdminBot"
+                status="Maintenance"
+                color="bg-yellow-500"
+                initials="AB"
+              />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Visual Charts */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Usage Chart */}
+        <Card className="bg-[#ffffff08] backdrop-blur border border-border/30 p-4">
+          <CardHeader className="p-0 mb-3">
+            <CardTitle className="text-base flex items-center">
+              <Cpu className="mr-2 h-4 w-4 text-primary" />
+              Usage Trends
+            </CardTitle>
+            <CardDescription className="text-xs">
+              Last 7 days command usage
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="h-40 flex items-end justify-between">
+              {[40, 75, 60, 85, 55, 90, 70].map((value, i) => (
+                <div
+                  key={i}
+                  className="flex flex-col items-center flex-1 mx-0.5"
+                >
+                  <div
+                    className="w-full bg-gradient-to-t from-primary/70 to-primary/30 rounded-t"
+                    style={{ height: `${value}%`, minHeight: "10px" }}
+                  ></div>
+                  <span className="text-[10px] text-muted-foreground mt-1">
+                    {["M", "T", "W", "T", "F", "S", "S"][i]}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Model Distribution */}
+        <Card className="bg-[#ffffff08] backdrop-blur border border-border/30 p-4">
+          <CardHeader className="p-0 mb-3">
+            <CardTitle className="text-base flex items-center">
+              <Brain className="mr-2 h-4 w-4 text-primary" />
+              AI Model Distribution
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="h-40 flex items-center justify-center">
+              <div className="relative w-32 h-32">
+                {/* Doughnut Chart */}
+                <div
+                  className="absolute inset-0 rounded-full border-[8px] border-transparent"
+                  style={{
+                    background: `conic-gradient(
+                       #3b82f6 0% 45%, 
+                       #8b5cf6 45% 75%, 
+                       #10b981 75% 100%
+                     )`
+                  }}
+                ></div>
+                <div className="absolute inset-4 rounded-full bg-card"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-xs font-semibold">Models</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-center gap-3 mt-2">
+              <ChartLegend color="bg-blue-500" label="GPT-4 (45%)" />
+              <ChartLegend color="bg-purple-500" label="Claude (30%)" />
+              <ChartLegend color="bg-green-500" label="Gemini (25%)" />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Quick Actions - Compact */}
+      <Card className="bg-[#ffffff08] backdrop-blur border border-border/30 p-4">
+        <CardHeader className="p-0 mb-3">
+          <CardTitle className="text-base flex items-center">
+            <Sparkles className="mr-2 h-4 w-4 text-primary" />
+            Quick Actions
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <QuickAction
+              icon={<Plus className="h-5 w-5" />}
+              label="New Bot"
+              color="from-primary/20"
+            />
+            <QuickAction
+              icon={<Terminal className="h-5 w-5" />}
+              label="Add Command"
+              color="from-secondary/20"
+            />
+            <QuickAction
+              icon={<Palette className="h-5 w-5" />}
+              label="Customize"
+              color="from-green-500/20"
+            />
+            <QuickAction
+              icon={<Brain className="h-5 w-5" />}
+              label="Configure AI"
+              color="from-purple-500/20"
+            />
+          </div>
+        </CardContent>
+      </Card>
     </div>
+  );
+
+  // Helper Components
+  const StatCard = ({ title, value, icon, change, color }: StatCardProps) => (
+    <Card className="bg-[#ffffff08] backdrop-blur border border-border/30 p-3">
+      <div className="flex justify-between items-start">
+        <span className="text-xs text-muted-foreground">{title}</span>
+        <div className={`p-1 rounded-full ${color}`}>{icon}</div>
+      </div>
+      <div className="mt-1 flex items-baseline">
+        <span className="text-xl font-bold">{value}</span>
+        <span className="text-xs text-green-500 ml-2">{change}</span>
+      </div>
+    </Card>
+  );
+
+  const BotStatusItem = ({ name, status, color, initials }: BotStatusItemProps) => (
+    <div className="flex items-center justify-between p-2 rounded-lg bg-muted/20 border border-border/30">
+      <div className="flex items-center">
+        <Avatar className={`w-8 h-8 ${color}`}>
+          <AvatarFallback className="text-xs">{initials}</AvatarFallback>
+        </Avatar>
+        <div className="ml-2">
+          <p className="text-sm font-medium">{name}</p>
+          <div className="flex items-center mt-1">
+            <div className={`w-2 h-2 rounded-full ${status === 'online' ? 'bg-green-500' : 'bg-yellow-500'} mr-1`}></div>
+            <span className="text-xs text-muted-foreground capitalize">{status}</span>
+          </div>
+        </div>
+      </div>
+      <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+        <ChevronRight className="h-4 w-4" />
+      </Button>
+    </div>
+  );
+
+  const ChartLegend = ({ color, label }: ChartLegendProps) => (
+    <div className="flex items-center">
+      <div className={`w-3 h-3 rounded-full ${color} mr-1`}></div>
+      <span className="text-xs">{label}</span>
+    </div>
+  );
+
+  const QuickAction = ({ icon, label, color }: QuickActionProps) => (
+    <Button 
+      variant="outline" 
+      className={`flex flex-col items-center justify-center h-16 gap-1 p-2 bg-gradient-to-br ${color} border border-border hover:border-primary/50 transition-all`}
+    >
+      {icon}
+      <span className="text-xs">{label}</span>
+    </Button>
   );
 
   // My Bots Tab Component
@@ -1465,7 +1619,7 @@ export default function Template() {
   );
 
   return (
-    <div className="relative overflow-hidden text-white h-full select-none">
+    <div className="relative overflow-hidden text-white h-full select-none mt-3">
       <div className="p-4">
         <Tabs
           value={activeTab}

@@ -2,7 +2,6 @@
 	Installed from https://reactbits.dev/ts/tailwind/
 */
 
-/* eslint-disable react/no-unknown-property */
 import React, { forwardRef, useMemo, useRef, useLayoutEffect } from "react";
 import { Canvas, useFrame, useThree, type RootState } from "@react-three/fiber";
 import { Color, Mesh, ShaderMaterial } from "three";
@@ -95,7 +94,7 @@ interface SilkPlaneProps {
 
 const SilkPlane = forwardRef<Mesh, SilkPlaneProps>(function SilkPlane(
   { uniforms },
-  ref,
+  ref
 ) {
   const { viewport } = useThree();
 
@@ -142,7 +141,7 @@ const Silk: React.FC<SilkProps> = ({
   scale = 1,
   color = "#7B7481",
   noiseIntensity = 1.5,
-  rotation = 0,
+  rotation = 0
 }) => {
   const meshRef = useRef<Mesh>(null);
 
@@ -153,13 +152,13 @@ const Silk: React.FC<SilkProps> = ({
       uNoiseIntensity: { value: noiseIntensity },
       uColor: { value: new Color(...hexToNormalizedRGB(color)) },
       uRotation: { value: rotation },
-      uTime: { value: 0 },
+      uTime: { value: 0 }
     }),
-    [speed, scale, noiseIntensity, color, rotation],
+    [speed, scale, noiseIntensity, color, rotation]
   );
 
   return (
-    <Canvas dpr={[1, 2]} frameloop="always">
+    <Canvas className="md:rounded-xl rounded-none" dpr={[1, 2]} frameloop="always">
       <SilkPlane ref={meshRef} uniforms={uniforms} />
     </Canvas>
   );
