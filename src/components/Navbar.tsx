@@ -27,7 +27,10 @@ function Navbar() {
   const { isRTL } = useLanguage();
 
   return (
-    <nav className="sticky top-5 z-50 flex justify-center items-center w-full px-2" dir={isRTL ? "rtl" : "ltr"}>
+    <nav
+      className="sticky top-5 z-50 flex justify-center items-center w-full px-2"
+      dir={isRTL ? "rtl" : "ltr"}
+    >
       <GlassSurface
         displace={1.5}
         distortionScale={-160}
@@ -37,7 +40,7 @@ function Navbar() {
         brightness={66}
         opacity={1}
         backgroundOpacity={0.5}
-        mixBlendMode="screen"
+        mixBlendMode="color"
         borderRadius={9999}
         className="mb-4 w-full max-w-4xl"
       >
@@ -108,7 +111,10 @@ function Navbar() {
                   <Menu size={24} />
                 </Button>
               </SheetTrigger>
-              <SheetContent side={isRTL ? "left" : "right"} className="rounded-lg">
+              <SheetContent
+                side={isRTL ? "left" : "right"}
+                className="rounded-lg"
+              >
                 <SheetHeader>
                   <SheetTitle className="text-left -mb-5">
                     Navigation

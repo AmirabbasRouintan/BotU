@@ -141,7 +141,7 @@ export default function Template() {
 
   // Dashboard Tab Component
   const DashboardTab = () => (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 mt-2">
       {/* Stats Cards - Compact */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <StatCard
@@ -149,35 +149,37 @@ export default function Template() {
           value="7"
           icon={<Bot className="h-4 w-4" />}
           change="+2 this month"
-          color="bg-green-500/20 text-green-500"
+          color="bg-green-500/20 text-green-500 border border-border"
         />
         <StatCard
           title="Active Commands"
           value="24"
           icon={<Terminal className="h-4 w-4" />}
           change="+5 this week"
-          color="bg-blue-500/20 text-blue-500"
+          color="bg-blue-500/20 text-blue-500 border border-border"
         />
         <StatCard
           title="User Interactions"
           value="1.2K"
           icon={<MessageSquare className="h-4 w-4" />}
           change="+120 today"
-          color="bg-purple-500/20 text-purple-500"
+          color="bg-purple-500/20 text-purple-500 border border-border"
         />
         <StatCard
           title="Success Rate"
           value="94%"
           icon={<Check className="h-4 w-4" />}
           change="+3% from last month"
-          color="bg-amber-500/20 text-amber-500"
+          color="bg-amber-500/20 text-amber-500 border border-border"
         />
       </div>
 
       {/* Main Content - Activity and Bots */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Activity Feed - More Compact */}
-        <Card className="lg:col-span-2 bg-[#ffffff08] backdrop-blur border border-border/30">
+        <Card className="lg:col-span-2 bg-[#ffffff08] backdrop-blur border border-border">
+          {" "}
+          {/* Updated border */}
           <CardHeader className="p-4 pb-2">
             <CardTitle className="text-base flex items-center">
               <List className="mr-2 h-4 w-4 text-primary" />
@@ -189,7 +191,7 @@ export default function Template() {
               {[...Array(5)].map((_, i) => (
                 <div
                   key={i}
-                  className="flex items-start p-2 rounded hover:bg-muted/20 transition-colors"
+                  className="flex items-start p-2 rounded hover:bg-muted/20 transition-colors border border-border" // Added border
                 >
                   <div className="bg-primary/10 p-1.5 rounded-full mr-2 mt-0.5">
                     <Edit className="h-3 w-3 text-primary" />
@@ -214,7 +216,9 @@ export default function Template() {
         </Card>
 
         {/* Bot Status - More Compact */}
-        <Card className="bg-[#ffffff08] backdrop-blur border border-border/30">
+        <Card className="bg-[#ffffff08] backdrop-blur border border-border">
+          {" "}
+          {/* Updated border */}
           <CardHeader className="p-4 pb-2">
             <CardTitle className="text-base flex items-center">
               <Bot className="mr-2 h-4 w-4 text-primary" />
@@ -249,7 +253,9 @@ export default function Template() {
       {/* Visual Charts */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Usage Chart */}
-        <Card className="bg-[#ffffff08] backdrop-blur border border-border/30 p-4">
+        <Card className="bg-[#ffffff08] backdrop-blur border border-border p-4">
+          {" "}
+          {/* Updated border */}
           <CardHeader className="p-0 mb-3">
             <CardTitle className="text-base flex items-center">
               <Cpu className="mr-2 h-4 w-4 text-primary" />
@@ -264,7 +270,7 @@ export default function Template() {
               {[40, 75, 60, 85, 55, 90, 70].map((value, i) => (
                 <div
                   key={i}
-                  className="flex flex-col items-center flex-1 mx-0.5"
+                  className="flex flex-col items-center flex-1 mx-0.5 border border-border" // Added border
                 >
                   <div
                     className="w-full bg-gradient-to-t from-primary/70 to-primary/30 rounded-t"
@@ -280,7 +286,9 @@ export default function Template() {
         </Card>
 
         {/* Model Distribution */}
-        <Card className="bg-[#ffffff08] backdrop-blur border border-border/30 p-4">
+        <Card className="bg-[#ffffff08] backdrop-blur border border-border p-4">
+          {" "}
+          {/* Updated border */}
           <CardHeader className="p-0 mb-3">
             <CardTitle className="text-base flex items-center">
               <Brain className="mr-2 h-4 w-4 text-primary" />
@@ -289,16 +297,18 @@ export default function Template() {
           </CardHeader>
           <CardContent className="p-0">
             <div className="h-40 flex items-center justify-center">
-              <div className="relative w-32 h-32">
+              <div className="relative w-32 h-32 border border-border rounded-full">
+                {" "}
+                {/* Added border */}
                 {/* Doughnut Chart */}
                 <div
                   className="absolute inset-0 rounded-full border-[8px] border-transparent"
                   style={{
                     background: `conic-gradient(
-                       #3b82f6 0% 45%, 
-                       #8b5cf6 45% 75%, 
-                       #10b981 75% 100%
-                     )`
+                    #3b82f6 0% 45%, 
+                    #8b5cf6 45% 75%, 
+                    #10b981 75% 100%
+                  )`
                   }}
                 ></div>
                 <div className="absolute inset-4 rounded-full bg-card"></div>
@@ -309,15 +319,20 @@ export default function Template() {
             </div>
             <div className="flex justify-center gap-3 mt-2">
               <ChartLegend color="bg-blue-500" label="GPT-4 (45%)" />
+              {/* Added border */}
               <ChartLegend color="bg-purple-500" label="Claude (30%)" />
+              {/* Added border */}
               <ChartLegend color="bg-green-500" label="Gemini (25%)" />
+              {/* Added border */}
             </div>
           </CardContent>
         </Card>
       </div>
 
       {/* Quick Actions - Compact */}
-      <Card className="bg-[#ffffff08] backdrop-blur border border-border/30 p-4">
+      <Card className="bg-[#ffffff08] backdrop-blur border border-border p-4">
+        {" "}
+        {/* Updated border */}
         <CardHeader className="p-0 mb-3">
           <CardTitle className="text-base flex items-center">
             <Sparkles className="mr-2 h-4 w-4 text-primary" />
@@ -351,10 +366,9 @@ export default function Template() {
       </Card>
     </div>
   );
-
   // Helper Components
   const StatCard = ({ title, value, icon, change, color }: StatCardProps) => (
-    <Card className="bg-[#ffffff08] backdrop-blur border border-border/30 p-3">
+    <Card className="bg-[#ffffff08] backdrop-blur border border-border p-3">
       <div className="flex justify-between items-start">
         <span className="text-xs text-muted-foreground">{title}</span>
         <div className={`p-1 rounded-full ${color}`}>{icon}</div>
@@ -366,7 +380,12 @@ export default function Template() {
     </Card>
   );
 
-  const BotStatusItem = ({ name, status, color, initials }: BotStatusItemProps) => (
+  const BotStatusItem = ({
+    name,
+    status,
+    color,
+    initials
+  }: BotStatusItemProps) => (
     <div className="flex items-center justify-between p-2 rounded-lg bg-muted/20 border border-border/30">
       <div className="flex items-center">
         <Avatar className={`w-8 h-8 ${color}`}>
@@ -375,8 +394,14 @@ export default function Template() {
         <div className="ml-2">
           <p className="text-sm font-medium">{name}</p>
           <div className="flex items-center mt-1">
-            <div className={`w-2 h-2 rounded-full ${status === 'online' ? 'bg-green-500' : 'bg-yellow-500'} mr-1`}></div>
-            <span className="text-xs text-muted-foreground capitalize">{status}</span>
+            <div
+              className={`w-2 h-2 rounded-full ${
+                status === "online" ? "bg-green-500" : "bg-yellow-500"
+              } mr-1`}
+            ></div>
+            <span className="text-xs text-muted-foreground capitalize">
+              {status}
+            </span>
           </div>
         </div>
       </div>
@@ -394,8 +419,8 @@ export default function Template() {
   );
 
   const QuickAction = ({ icon, label, color }: QuickActionProps) => (
-    <Button 
-      variant="outline" 
+    <Button
+      variant="outline"
       className={`flex flex-col items-center justify-center h-16 gap-1 p-2 bg-gradient-to-br ${color} border border-border hover:border-primary/50 transition-all`}
     >
       {icon}
