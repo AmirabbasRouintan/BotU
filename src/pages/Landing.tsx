@@ -4,9 +4,18 @@ import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CodeSnipp from "@/components/codesnipp";
-import { ArrowRight, ChevronDown, ChevronUp, Info } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronDown,
+  ChevronUp,
+  Info,
+  Bot,
+  Twitter,
+  Github
+} from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/translations";
+import { Input } from "@/components/ui/input";
 
 const features1 = [
   {
@@ -642,6 +651,174 @@ export default function Landing() {
                 }`}
               />
             </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer Section */}
+      <div className="w-full max-w-6xl mt-20 mb-10 px-4">
+        <div className="border-t border-border/50 pt-10">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {/* Brand Column */}
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <Bot className="h-6 w-6 text-primary" />
+                <span className="text-xl font-bold tracking-tight">BotU</span>
+              </div>
+              <p className="text-sm text-muted-foreground max-w-xs">
+                Build smarter Telegram bots without code. Free forever plan with
+                all premium features.
+              </p>
+              <div className="flex gap-3 mt-2">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full backdrop-blur"
+                >
+                  <Twitter className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full backdrop-blur"
+                >
+                  <Github className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+
+            {/* Features Column */}
+            <div>
+              <h3 className="text-sm font-semibold mb-4 tracking-wider uppercase">
+                Features
+              </h3>
+              <ul className="space-y-2">
+                <li>
+                  <a
+                    href="#"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    AI Chatbots
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Payment Integration
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Database Storage
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Scheduled Tasks
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Resources Column */}
+            <div>
+              <h3 className="text-sm font-semibold mb-4 tracking-wider uppercase">
+                Resources
+              </h3>
+              <ul className="space-y-2">
+                <li>
+                  <a
+                    href="#"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Documentation
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    API Reference
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Tutorials
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Community
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Newsletter Column */}
+            <div className="">
+              <h3 className="text-sm font-semibold mb-4 tracking-wider uppercase">
+                Stay Updated
+              </h3>
+              <p className="text-sm text-muted-foreground mb-3">
+                Join our newsletter for product updates and bot-building tips.
+              </p>
+              <div className="flex gap-2">
+                <Input
+                  type="email"
+                  placeholder="Your email"
+                  className="bg-transparent backdrop-blur rounded-xl border border-border/50"
+                />
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="rounded-xl backdrop-blur mt-1"
+                >
+                  Subscribe
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="mt-12 pt-6 border-t border-border/30 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-xs text-muted-foreground">
+              © {new Date().getFullYear()} BotU. All rights reserved.
+            </p>
+            <div className="flex gap-4">
+              <a
+                href="#"
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Terms
+              </a>
+              <a
+                href="#"
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Privacy
+              </a>
+              <a
+                href="#"
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Cookies
+              </a>
+            </div>
           </div>
         </div>
       </div>
