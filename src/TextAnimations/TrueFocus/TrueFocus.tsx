@@ -97,13 +97,7 @@ const TrueFocus: React.FC<TrueFocusProps> = ({
             className="relative text-[5rem] font-bold cursor-pointer"
             style={
               {
-                filter: manualMode
-                  ? isActive
-                    ? `blur(0px)`
-                    : `blur(${blurAmount}px)`
-                  : isActive
-                  ? `blur(0px)`
-                  : `blur(${blurAmount}px)`,
+                filter: isActive ? `blur(0px)` : `blur(${blurAmount}px)`,
                 transition: `filter ${animationDuration}s ease`
               } as React.CSSProperties
             }
@@ -125,7 +119,10 @@ const TrueFocus: React.FC<TrueFocusProps> = ({
           opacity: currentIndex >= 0 ? 1 : 0
         }}
         transition={{
-          duration: animationDuration
+          type: "spring",
+          stiffness: 150,
+          damping: 20,
+          bounce: 0.2
         }}
         style={
           {

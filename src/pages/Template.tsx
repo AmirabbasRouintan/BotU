@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Card,
   CardHeader,
@@ -25,8 +25,8 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Icons
 import {
   Settings as Cog,
   Palette,
@@ -94,6 +94,256 @@ const initialCommands: ColumnData[] = [
   }
 ];
 
+// AI Help Tab Component
+const AIHelpTab = () => {
+  const [messages, setMessages] = useState([
+    {
+      id: 1,
+      text: "Hi there! I'm your AI assistant. How can I help you today? You can ask me about:\n\n• Setting up your bot\n• Troubleshooting issues\n• API documentation\n• Best practices",
+      isUser: false,
+      timestamp: new Date()
+    }
+  ]);
+  const [inputValue, setInputValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Initialize Gemini API
+  const API_KEY =
+    import.meta.env.VITE_GEMINI_API_KEY ||
+    process.env.REACT_APP_GEMINI_API_KEY ||
+    "AIzaSyCzdqvMRidgBWxMVkBQqUvgoNUnm54FP5Q";
+  const genAI = new GoogleGenerativeAI(API_KEY);
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+
+  // Auto-scroll to bottom when new messages are added
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleSendMessage = async () => {
+    if (!inputValue.trim() || isLoading) return;
+
+    // Add user message to chat
+    const userMessage = {
+      id: messages.length + 1,
+      text: inputValue,
+      isUser: true,
+      timestamp: new Date()
+    };
+
+    setMessages((prev) => [...prev, userMessage]);
+    setInputValue("");
+    setIsLoading(true);
+
+    try {
+      // Send message to Gemini API
+      const result = await model.generateContent(inputValue);
+      const response = await result.response;
+      const text = response.text();
+
+      // Add AI response to chat
+      const aiMessage = {
+        id: messages.length + 2,
+        text: text,
+        isUser: false,
+        timestamp: new Date()
+      };
+
+      setMessages((prev) => [...prev, aiMessage]);
+    } catch (error) {
+      console.error("Error calling Gemini API:", error);
+
+      // Show error message
+      const errorMessage = {
+        id: messages.length + 2,
+        text: "Sorry, I'm having trouble connecting to the AI service. Please try again later.",
+        isUser: false,
+        timestamp: new Date()
+      };
+
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleQuickQuestion = async (question: string) => {
+    setInputValue(question);
+
+    // Add a small delay to let the input update
+    setTimeout(() => {
+      handleSendMessage();
+    }, 100);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
+  return (
+    <Card className="bg-[#85858510] backdrop-blur-xl rounded-2xl border border-border shadow-xl">
+      <CardHeader>
+        <CardTitle className="flex items-center">
+          <Sparkles className="mr-2 h-5 w-5 text-yellow-400" />
+          AI Assistant
+        </CardTitle>
+        <CardDescription>
+          Get instant help from our AI-powered assistant
+        </CardDescription>
+      </CardHeader>
+
+      <CardContent>
+        <div className="bg-muted/20 rounded-lg p-4 h-[50vh] overflow-y-auto text-sm font-light">
+          <div className="space-y-4">
+            {messages.map((message) => (
+              <div
+                key={message.id}
+                className={`flex ${message.isUser ? "justify-end" : ""}`}
+              >
+                {!message.isUser && (
+                  <Avatar className="mr-2 h-6 w-6">
+                    <AvatarFallback className="bg-blue-500 text-white">
+                      AI
+                    </AvatarFallback>
+                  </Avatar>
+                )}
+
+                <div
+                  className={`
+                    rounded-xl p-3 max-w-[80%] whitespace-pre-line
+                    ${
+                      message.isUser
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-secondary text-secondary-foreground"
+                    }
+                  `}
+                >
+                  {message.text}
+                  <div
+                    className={`text-xs mt-1 ${
+                      message.isUser
+                        ? "text-primary-foreground/70"
+                        : "text-secondary-foreground/70"
+                    }`}
+                  >
+                    {message.timestamp.toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit"
+                    })}
+                  </div>
+                </div>
+
+                {message.isUser && (
+                  <Avatar className="ml-2 h-6 w-6">
+                    <AvatarFallback className="bg-purple-500 text-white">
+                      U
+                    </AvatarFallback>
+                  </Avatar>
+                )}
+              </div>
+            ))}
+
+            {isLoading && (
+              <div className="flex">
+                <Avatar className="mr-2 h-6 w-6">
+                  <AvatarFallback className="bg-blue-500 text-white">
+                    AI
+                  </AvatarFallback>
+                </Avatar>
+                <div className="bg-secondary text-secondary-foreground rounded-xl p-3 max-w-[80%]">
+                  <div className="flex space-x-1">
+                    <div className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"></div>
+                    <div
+                      className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"
+                      style={{ animationDelay: "0.2s" }}
+                    ></div>
+                    <div
+                      className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"
+                      style={{ animationDelay: "0.4s" }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div ref={messagesEndRef} />
+          </div>
+        </div>
+
+        <div className="flex gap-2 mt-4">
+          <Input
+            placeholder="Ask a question..."
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={handleKeyPress}
+            disabled={isLoading}
+          />
+          <Button
+            onClick={handleSendMessage}
+            disabled={isLoading || !inputValue.trim()}
+          >
+            {isLoading ? "Sending..." : "Send"}
+          </Button>
+        </div>
+
+        <div className="mt-6">
+          <h3 className="font-medium mb-2">Quick Questions</h3>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                handleQuickQuestion("How do I add permissions to my bot?")
+              }
+              disabled={isLoading}
+            >
+              How to add permissions?
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                handleQuickQuestion("What are the API rate limits?")
+              }
+              disabled={isLoading}
+            >
+              API rate limits
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                handleQuickQuestion("How do I integrate with Discord?")
+              }
+              disabled={isLoading}
+            >
+              Discord integration
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                handleQuickQuestion("How do I troubleshoot common errors?")
+              }
+              disabled={isLoading}
+            >
+              Troubleshoot errors
+            </Button>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
 // Main Component
 export default function Template() {
   const [loading, setLoading] = useState(true);
@@ -101,10 +351,9 @@ export default function Template() {
   const [activeTab, setActiveTab] = useState("dashboard");
 
   useEffect(() => {
-    // Show skeleton for 3.5 seconds
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 3500);
+    }, 2500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -136,8 +385,6 @@ export default function Template() {
   if (loading) {
     return <LoadingSkeleton />;
   }
-
-  // Move card between columns
 
   // Dashboard Tab Component
   const DashboardTab = () => (
@@ -1554,90 +1801,6 @@ export default function Template() {
               </div>
             </CardContent>
           </Card>
-        </div>
-      </CardContent>
-    </Card>
-  );
-
-  // AI Help Tab Component
-  const AIHelpTab = () => (
-    <Card className="bg-[#85858510] backdrop-blur-xl rounded-2xl border border-border shadow-xl">
-      <CardHeader>
-        <CardTitle className="flex items-center">
-          <Sparkles className="mr-2 h-5 w-5" />
-          AI Assistant
-        </CardTitle>
-        <CardDescription>
-          Get instant help from our AI-powered assistant
-        </CardDescription>
-      </CardHeader>
-
-      <CardContent>
-        <div className="bg-muted/20 rounded-lg p-4 h-96 overflow-y-auto">
-          <div className="space-y-4">
-            <div className="flex">
-              <Avatar className="mr-2 h-6 w-6">
-                <AvatarFallback>AI</AvatarFallback>
-              </Avatar>
-              <div className="bg-secondary text-secondary-foreground rounded-xl p-3 max-w-[80%]">
-                Hi there! I'm your AI assistant. How can I help you today? You
-                can ask me about:
-                <ul className="list-disc pl-5 mt-2">
-                  <li>Setting up your bot</li>
-                  <li>Troubleshooting issues</li>
-                  <li>API documentation</li>
-                  <li>Best practices</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="flex justify-end">
-              <div className="bg-primary text-primary-foreground rounded-xl p-3 max-w-[80%]">
-                How do I create a new command?
-              </div>
-            </div>
-
-            <div className="flex">
-              <Avatar className="mr-2 h-6 w-6">
-                <AvatarFallback>AI</AvatarFallback>
-              </Avatar>
-              <div className="bg-secondary text-secondary-foreground rounded-xl p-3 max-w-[80%]">
-                To create a new command:
-                <ol className="list-decimal pl-5 mt-2">
-                  <li>Go to the "My Bots" section</li>
-                  <li>Select your bot</li>
-                  <li>Navigate to "Custom Commands"</li>
-                  <li>Click "Add Command"</li>
-                  <li>Fill in the command details</li>
-                  <li>Save your changes</li>
-                </ol>
-                Would you like me to show you step-by-step?
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex gap-2 mt-4">
-          <Input placeholder="Ask a question..." />
-          <Button>Send</Button>
-        </div>
-
-        <div className="mt-6">
-          <h3 className="font-medium mb-2">Quick Questions</h3>
-          <div className="flex flex-wrap gap-2">
-            <Button variant="outline" size="sm">
-              How to add permissions?
-            </Button>
-            <Button variant="outline" size="sm">
-              API rate limits
-            </Button>
-            <Button variant="outline" size="sm">
-              Discord integration
-            </Button>
-            <Button variant="outline" size="sm">
-              Troubleshoot errors
-            </Button>
-          </div>
         </div>
       </CardContent>
     </Card>

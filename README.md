@@ -26,6 +26,12 @@
 - **Webhook configuration** for real-time updates
 - **Plugin ecosystem** for extending functionality
 
+### 🤖 AI-Powered Assistance
+- **AI Help Tab** with Google Gemini integration
+- **Instant support** for bot development questions
+- **Quick questions** for common issues
+- **Real-time chat** interface with message history
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -54,9 +60,18 @@ npm run dev
 ### Configuration
 Create `.env` file with the following variables:
 ```env
-MONGODB_URI=mongodb://localhost:27017/botbuilder
-TELEGRAM_API_TOKEN=your_telegram_token
-NEXTAUTH_SECRET=your_secret_key
+# Google Generative AI API Key for the AI Help feature
+# Get your API key from https://aistudio.google.com/
+VITE_GEMINI_API_KEY=your_gemini_api_key_here
+
+# Telegram Bot API Token
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
+
+# Backend API URL
+VITE_API_URL=http://localhost:8000
+
+# Node Environment
+NODE_ENV=development
 ```
 
 ## 🧩 Project Structure
@@ -83,6 +98,9 @@ telegram-bot-builder/
 ### Analytics
 ![Analytics](https://via.placeholder.com/600x300.png?text=Bot+Performance+Analytics)
 
+### AI Help
+![AI Help](https://via.placeholder.com/600x300.png?text=AI+Help+Assistant)
+
 ## 🛠 Technologies Used
 
 - **Frontend**: 
@@ -98,6 +116,9 @@ telegram-bot-builder/
 
 - **Authentication**: 
   ![NextAuth.js](https://img.shields.io/badge/NextAuth.js-000000?logo=nextdotjs&logoColor=white)
+
+- **AI Integration**:
+  ![Google Gemini](https://img.shields.io/badge/Google_Gemini-4285F4?logo=googledialogflow&logoColor=white)
 
 - **UI Components**: 
   ![Shadcn UI](https://img.shields.io/badge/Shadcn_UI-000000?logo=react&logoColor=white)
