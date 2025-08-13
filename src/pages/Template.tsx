@@ -112,7 +112,7 @@ const AIHelpTab = () => {
   const API_KEY =
     import.meta.env.VITE_GEMINI_API_KEY ||
     process.env.REACT_APP_GEMINI_API_KEY ||
-    "AIzaSyCzdqvMRidgBWxMVkBQqUvgoNUnm54FP5Q";
+    ""; //the gemini api key
   const genAI = new GoogleGenerativeAI(API_KEY);
   const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
