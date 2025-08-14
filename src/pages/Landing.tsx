@@ -11,7 +11,23 @@ import {
   Info,
   Bot,
   Twitter,
-  Github
+  Github,
+  Repeat,
+  Bot as BotIcon,
+  Plug,
+  Brain,
+  UserCog,
+  Database,
+  Wallet,
+  Clock,
+  Target,
+  Smartphone,
+  Bitcoin,
+  Building,
+  Users,
+  Wrench,
+  Sparkles,
+  Rocket
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/translations";
@@ -19,55 +35,55 @@ import { Input } from "@/components/ui/input";
 
 const features1 = [
   {
-    icon: "🔄",
+    icon: <Repeat className="w-6 h-6" />,
     titleKey: "Dynamic Inline Buttons",
     descriptionKey:
       "Design interactive experiences with inline buttons that perform specific actions directly within chats."
   },
   {
-    icon: "🤖",
+    icon: <BotIcon className="w-6 h-6" />,
     titleKey: "Automated Replies",
     descriptionKey:
       "Respond to user messages instantly using predefined patterns — no manual effort required."
   },
   {
-    icon: "🔌",
+    icon: <Plug className="w-6 h-6" />,
     titleKey: "External API & Webhook Support",
     descriptionKey:
       "Integrate third-party APIs and services to expand your bot's capabilities beyond Telegram."
   },
   {
-    icon: "🧠",
+    icon: <Brain className="w-6 h-6" />,
     titleKey: "AI-Powered Features",
     descriptionKey:
       "Use artificial intelligence to enable smarter conversations and contextual understanding."
   },
   {
-    icon: "👨‍💼",
+    icon: <UserCog className="w-6 h-6" />,
     titleKey: "Advanced Admin Tools",
     descriptionKey:
       "Control access with role-based permissions and powerful command configurations for admins."
   },
   {
-    icon: "💾",
+    icon: <Database className="w-6 h-6" />,
     titleKey: "Built-in Database Integration",
     descriptionKey:
       "Utilize MongoDB or Redis to store and manage persistent data across user sessions."
   },
   {
-    icon: "💰",
+    icon: <Wallet className="w-6 h-6" />,
     titleKey: "Revenue & Payments",
     descriptionKey:
       "Add monetization through payments, subscriptions, or gated premium features."
   },
   {
-    icon: "⏰",
+    icon: <Clock className="w-6 h-6" />,
     titleKey: "Timed Actions",
     descriptionKey:
       "Automatically execute tasks or messages on a schedule — ideal for alerts and timed workflows."
   },
   {
-    icon: "🎯",
+    icon: <Target className="w-6 h-6" />,
     titleKey: "Audience Targeting",
     descriptionKey:
       "Segment users based on behavior or preferences and send personalized messages for higher engagement."
@@ -143,25 +159,25 @@ const features2 = [
 
 const audience = [
   {
-    icon: "📱",
+    icon: <Smartphone className="w-6 h-6" />,
     titleKey: "Content Creators",
     descriptionKey:
       "Engage your audience, share premium content, and connect with fans through automated, personalized experiences."
   },
   {
-    icon: "₿",
+    icon: <Bitcoin className="w-6 h-6" />,
     titleKey: "Crypto Projects",
     descriptionKey:
       "Provide instant price updates, token stats, and automated answers to FAQs — keeping your crypto community informed 24/7."
   },
   {
-    icon: "🏢",
+    icon: <Building className="w-6 h-6" />,
     titleKey: "Businesses",
     descriptionKey:
       "Handle customer inquiries, generate leads, book appointments, and simplify daily tasks using intelligent bots."
   },
   {
-    icon: "👥",
+    icon: <Users className="w-6 h-6" />,
     titleKey: "Communities",
     descriptionKey:
       "Boost group activity, manage events, automate moderation, and broadcast announcements seamlessly."
@@ -284,7 +300,7 @@ export default function Landing() {
           <Card className="h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
             <CardHeader className="items-center">
               <div className="bg-primary/10 text-primary rounded-lg w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
-                <span className="text-2xl">🛠️</span>
+                <Wrench className="w-8 h-8" />
               </div>
               <CardTitle>{t("Select Command Type", language)}</CardTitle>
             </CardHeader>
@@ -301,7 +317,7 @@ export default function Landing() {
           <Card className="h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
             <CardHeader className="items-center">
               <div className="bg-primary/10 text-primary rounded-lg w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
-                <span className="text-2xl">✨</span>
+                <Sparkles className="w-8 h-8" />
               </div>
               <CardTitle>
                 {t("Write Easy Code with Suggestions", language)}
@@ -320,7 +336,7 @@ export default function Landing() {
           <Card className="h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
             <CardHeader className="items-center">
               <div className="bg-primary/10 text-primary rounded-lg w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
-                <span className="text-2xl">🚀</span>
+                <Rocket className="w-8 h-8" />
               </div>
               <CardTitle>{t("Deploy Instantly", language)}</CardTitle>
             </CardHeader>

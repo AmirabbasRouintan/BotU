@@ -1,4 +1,6 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import Lenis from "@studio-freight/lenis";
 import Home from "./pages/Home";
 import Landing from "./pages/Landing";
 import Navbar from "./components/Navbar";
@@ -9,6 +11,58 @@ import AuthPage from "./pages/AuthPage";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
 function App() {
+  const lenisRef = useRef<Lenis | null>(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    lenisRef.current = new Lenis({
+      duration: 1.2,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+      smoothWheel: true,
+      wheelMultiplier: 1.2,
+      touchMultiplier: 2,
+      infinite: false
+    });
+
+    const animate = (time: number) => {
+      lenisRef.current?.raf(time);
+      requestAnimationFrame(animate);
+    };
+
+    requestAnimationFrame(animate);
+
+    return () => {
+      lenisRef.current?.destroy();
+      lenisRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, {
+        duration: 1.4,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        immediate: false
+      });
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!lenisRef.current) return;
+
+    const handleScroll = () => {
+    };
+
+    lenisRef.current.on("scroll", handleScroll);
+    return () => {
+      if (lenisRef.current) {
+        lenisRef.current.off("scroll", handleScroll);
+      }
+    };
+  }, []);
+
   return (
     <LanguageProvider>
       <ClickSpark
