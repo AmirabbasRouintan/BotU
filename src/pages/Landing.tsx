@@ -1,7 +1,7 @@
 import TrueFocus from "@/TextAnimations/TrueFocus/TrueFocus";
 import Magnet from "@/Animations/Magnet/Magnet";
 import { Button } from "@/components/ui/button";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CodeSnipp from "@/components/codesnipp";
 import {
@@ -13,7 +13,6 @@ import {
   Twitter,
   Github,
   Repeat,
-  Bot as BotIcon,
   Plug,
   Brain,
   UserCog,
@@ -32,6 +31,7 @@ import {
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/translations";
 import { Input } from "@/components/ui/input";
+import { motion, useInView } from "framer-motion";
 
 const features1 = [
   {
@@ -41,7 +41,7 @@ const features1 = [
       "Design interactive experiences with inline buttons that perform specific actions directly within chats."
   },
   {
-    icon: <BotIcon className="w-6 h-6" />,
+    icon: <Bot className="w-6 h-6" />,
     titleKey: "Automated Replies",
     descriptionKey:
       "Respond to user messages instantly using predefined patterns — no manual effort required."
@@ -184,6 +184,32 @@ const audience = [
   }
 ];
 
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.8 } }
+};
+
+const slideInFromBottom = {
+  hidden: { opacity: 0, y: 100 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
+};
+
 export default function Landing() {
   const { language, isRTL } = useLanguage();
   const [expandedFeature, setExpandedFeature] = useState<number | null>(null);
@@ -191,6 +217,37 @@ export default function Landing() {
     key: "priority",
     direction: "ascending"
   });
+
+  // Create refs for animation triggers
+  const section1Ref = useRef(null);
+  const section2Ref = useRef(null);
+  const section3Ref = useRef(null);
+  const section4Ref = useRef(null);
+  const section5Ref = useRef(null);
+  const footerRef = useRef(null);
+
+  // Check when sections are in view
+  const section1InView = useInView(section1Ref, {
+    once: false,
+    margin: "-100px"
+  });
+  const section2InView = useInView(section2Ref, {
+    once: false,
+    margin: "-100px"
+  });
+  const section3InView = useInView(section3Ref, {
+    once: false,
+    margin: "-100px"
+  });
+  const section4InView = useInView(section4Ref, {
+    once: false,
+    margin: "-100px"
+  });
+  const section5InView = useInView(section5Ref, {
+    once: false,
+    margin: "-100px"
+  });
+  const footerInView = useInView(footerRef, { once: false, margin: "-100px" });
 
   const sortedFeatures = [...features2].sort((a, b) => {
     if (sortConfig.direction === "ascending") {
@@ -233,7 +290,13 @@ export default function Landing() {
       dir={isRTL ? "rtl" : "ltr"}
     >
       {/* Section 1 - Hero */}
-      <div className="Section-1 w-full max-w-6xl flex flex-col justify-center items-center bg-transparent">
+      <motion.div
+        ref={section1Ref}
+        className="Section-1 w-full max-w-6xl flex flex-col justify-center items-center bg-transparent"
+        initial="hidden"
+        animate={section1InView ? "visible" : "hidden"}
+        variants={fadeInUp}
+      >
         <Magnet padding={5000} disabled={false} magnetStrength={50}>
           <h1 className="font-extralight text-base md:text-lg mb-5 md:mb-7 text-center [text-shadow:_0px_0px_20px_#000000]">
             {t("Telegram bot templates", language)}
@@ -280,82 +343,111 @@ export default function Landing() {
             {t("Pro Trial", language)}
           </Button>
         </div>
-      </div>
+      </motion.div>
 
       <CodeSnipp />
 
       {/* Section 2 - Steps */}
-      <div className="Section-2 mb-16 md:mb-20 text-center w-full max-w-6xl">
-        <h2 className="text-2xl md:text-4xl font-bold drop-shadow-md mb-3 md:mb-4">
+      <motion.div
+        ref={section2Ref}
+        className="Section-2 mb-16 md:mb-20 text-center w-full max-w-6xl"
+        initial="hidden"
+        animate={section2InView ? "visible" : "hidden"}
+        variants={fadeInUp}
+      >
+        <motion.h2
+          className="text-2xl md:text-4xl font-bold drop-shadow-md mb-3 md:mb-4"
+          variants={fadeInUp}
+        >
           {t("Build Your Bot in Just a Few Easy Steps", language)}
-        </h2>
-        <p className="text-base md:text-lg font-extralight drop-shadow-sm max-w-full md:max-w-[50rem] mx-auto">
+        </motion.h2>
+        <motion.p
+          className="text-base md:text-lg font-extralight drop-shadow-sm max-w-full md:max-w-[50rem] mx-auto"
+          variants={fadeInUp}
+        >
           {t(
             "Our simplified process ensures a fast, user-friendly experience perfect for newcomers.",
             language
           )}
-        </p>
+        </motion.p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-8 md:mt-12 w-full max-w-6xl mx-auto">
-          <Card className="h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
-            <CardHeader className="items-center">
-              <div className="bg-primary/10 text-primary rounded-lg w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
-                <Wrench className="w-8 h-8" />
-              </div>
-              <CardTitle>{t("Select Command Type", language)}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                {t(
-                  "Choose from a variety of command types like text, buttons, images, or custom actions.",
-                  language
-                )}
-              </p>
-            </CardContent>
-          </Card>
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-8 md:mt-12 w-full max-w-6xl mx-auto"
+          variants={staggerContainer}
+          initial="hidden"
+          animate={section2InView ? "visible" : "hidden"}
+        >
+          <motion.div variants={fadeInUp}>
+            <Card className="h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
+              <CardHeader className="items-center">
+                <div className="bg-primary/10 text-primary rounded-lg w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
+                  <Wrench className="w-8 h-8" />
+                </div>
+                <CardTitle>{t("Select Command Type", language)}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  {t(
+                    "Choose from a variety of command types like text, buttons, images, or custom actions.",
+                    language
+                  )}
+                </p>
+              </CardContent>
+            </Card>
+          </motion.div>
 
-          <Card className="h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
-            <CardHeader className="items-center">
-              <div className="bg-primary/10 text-primary rounded-lg w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
-                <Sparkles className="w-8 h-8" />
-              </div>
-              <CardTitle>
-                {t("Write Easy Code with Suggestions", language)}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                {t(
-                  "Use our interactive code editor with AI-powered suggestions to create bot logic effortlessly.",
-                  language
-                )}
-              </p>
-            </CardContent>
-          </Card>
+          <motion.div variants={fadeInUp}>
+            <Card className="h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
+              <CardHeader className="items-center">
+                <div className="bg-primary/10 text-primary rounded-lg w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
+                  <Sparkles className="w-8 h-8" />
+                </div>
+                <CardTitle>
+                  {t("Write Easy Code with Suggestions", language)}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  {t(
+                    "Use our interactive code editor with AI-powered suggestions to create bot logic effortlessly.",
+                    language
+                  )}
+                </p>
+              </CardContent>
+            </Card>
+          </motion.div>
 
-          <Card className="h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
-            <CardHeader className="items-center">
-              <div className="bg-primary/10 text-primary rounded-lg w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
-                <Rocket className="w-8 h-8" />
-              </div>
-              <CardTitle>{t("Deploy Instantly", language)}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                {t(
-                  "Go live with one click. Your bot is immediately available on Telegram for all your users.",
-                  language
-                )}
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+          <motion.div variants={fadeInUp}>
+            <Card className="h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
+              <CardHeader className="items-center">
+                <div className="bg-primary/10 text-primary rounded-lg w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
+                  <Rocket className="w-8 h-8" />
+                </div>
+                <CardTitle>{t("Deploy Instantly", language)}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  {t(
+                    "Go live with one click. Your bot is immediately available on Telegram for all your users.",
+                    language
+                  )}
+                </p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </motion.div>
+      </motion.div>
 
       {/* Section 3 - Features */}
-      <div className="Section-3 mb-12 py-12 md:mb-16 md:py-16 w-full max-w-6xl">
+      <motion.div
+        ref={section3Ref}
+        className="Section-3 mb-12 py-12 md:mb-16 md:py-16 w-full max-w-6xl"
+        initial="hidden"
+        animate={section3InView ? "visible" : "hidden"}
+        variants={fadeInUp}
+      >
         <div className="w-full px-0 md:px-4 bg-transparent">
-          <div className="text-center mb-12">
+          <motion.div className="text-center mb-12" variants={fadeInUp}>
             <h1 className="text-2xl md:text-4xl font-bold mb-4">
               {t("Powerful Features With Easy Coding", language)}
             </h1>
@@ -369,47 +461,60 @@ export default function Landing() {
             <div className="flex justify-center my-8">
               <div className="w-16 h-1 bg-primary rounded-full"></div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
+            variants={staggerContainer}
+            initial="hidden"
+            animate={section3InView ? "visible" : "hidden"}
+          >
             {features1.map((feature, index) => (
-              <Card
-                key={index}
-                className="group h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10"
-              >
-                <CardHeader className="pb-3">
-                  <div className="bg-primary/10 text-primary rounded-lg w-12 h-12 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
-                    <span className="text-2xl">{feature.icon}</span>
-                  </div>
-                  <CardTitle className="text-xl">
-                    {t(feature.titleKey, language)}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    {t(feature.descriptionKey, language)}
-                  </p>
-                </CardContent>
-              </Card>
+              <motion.div key={index} variants={fadeInUp}>
+                <Card className="group h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
+                  <CardHeader className="pb-3">
+                    <div className="bg-primary/10 text-primary rounded-lg w-12 h-12 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
+                      <span className="text-2xl">{feature.icon}</span>
+                    </div>
+                    <CardTitle className="text-xl">
+                      {t(feature.titleKey, language)}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      {t(feature.descriptionKey, language)}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Section 4 - Comparison Table */}
-      <div className="Section-4 py-8 md:py-12 w-full max-w-6xl">
+      <motion.div
+        ref={section4Ref}
+        className="Section-4 py-8 md:py-12 w-full max-w-6xl"
+        initial="hidden"
+        animate={section4InView ? "visible" : "hidden"}
+        variants={slideInFromBottom}
+      >
         <div className="w-full px-0 md:px-4">
-          <div className="text-center mb-8 md:mb-10">
+          <motion.div className="text-center mb-8 md:mb-10" variants={fadeInUp}>
             <h2 className="text-xl md:text-2xl font-bold mb-3">
               Platform Comparison
             </h2>
             <p className="text-sm md:text-base text-muted-foreground">
               See how BotU outperforms other Telegram bot platforms
             </p>
-          </div>
+          </motion.div>
 
           {/* Desktop/Tablet View */}
-          <div className="hidden md:block overflow-x-auto text-xs md:text-sm">
+          <motion.div
+            className="hidden md:block overflow-x-auto text-xs md:text-sm"
+            variants={fadeIn}
+          >
             <table className="min-w-full rounded-xl border border-border overflow-hidden shadow-sm">
               <thead>
                 <tr className="bg-transparent backdrop-blur-md border-b border-border">
@@ -450,7 +555,7 @@ export default function Landing() {
                   <React.Fragment key={index}>
                     <tr
                       className={`border-b border-border hover:bg-transparent backdrop-blur-md transition-colors ${
-                        index % 2 === 0 ? "bg-transparen" : "bg-transparen"
+                        index % 2 === 0 ? "bg-transparent" : "bg-transparent"
                       }`}
                     >
                       <td className="py-2 px-4 font-medium">{feat.feature}</td>
@@ -510,14 +615,20 @@ export default function Landing() {
                 ))}
               </tbody>
             </table>
-          </div>
+          </motion.div>
 
           {/* Mobile View - Compact Cards */}
-          <div className="md:hidden space-y-3">
+          <motion.div
+            className="md:hidden space-y-3"
+            variants={staggerContainer}
+            initial="hidden"
+            animate={section4InView ? "visible" : "hidden"}
+          >
             {sortedFeatures.map((feat, index) => (
-              <div
+              <motion.div
                 key={index}
                 className="bg-transparent backdrop-blur-md rounded-xl border border-border p-3 shadow-sm"
+                variants={fadeInUp}
               >
                 <div
                   className="flex justify-between items-center cursor-pointer"
@@ -586,12 +697,15 @@ export default function Landing() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           {/* Summary Section */}
-          <div className="mt-6 p-4 border border-border rounded-xl bg-transparent backdrop-blur-md grid grid-cols-3 gap-4 text-center text-xs md:text-sm">
+          <motion.div
+            className="mt-6 p-4 border border-border rounded-xl bg-transparent backdrop-blur-md grid grid-cols-3 gap-4 text-center text-xs md:text-sm"
+            variants={fadeInUp}
+          >
             <div>
               <div className="font-bold mb-1">100%</div>
               <div className="text-muted-foreground">Feature Coverage</div>
@@ -604,18 +718,30 @@ export default function Landing() {
               <div className="font-bold mb-1">$0</div>
               <div className="text-muted-foreground">Free Tier Cost</div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="mt-4 text-center text-xs text-muted-foreground">
+          <motion.div
+            className="mt-4 text-center text-xs text-muted-foreground"
+            variants={fadeInUp}
+          >
             All premium features available in our free plan with no restrictions
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Section 5 - Audience */}
-      <div className="Section-5 py-12 md:py-16 w-full max-w-6xl">
+      <motion.div
+        ref={section5Ref}
+        className="Section-5 py-12 md:py-16 w-full max-w-6xl"
+        initial="hidden"
+        animate={section5InView ? "visible" : "hidden"}
+        variants={slideInFromBottom}
+      >
         <div className="w-full px-0 md:px-4 bg-transparent">
-          <div className="text-center mb-10 md:mb-12">
+          <motion.div
+            className="text-center mb-10 md:mb-12"
+            variants={fadeInUp}
+          >
             <h1 className="text-2xl md:text-4xl font-bold mb-4">
               {t("Who is BotU for?", language)}
             </h1>
@@ -629,30 +755,37 @@ export default function Landing() {
             <div className="flex justify-center my-8">
               <div className="w-16 h-1 bg-primary rounded-full"></div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-16">
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-16"
+            variants={staggerContainer}
+            initial="hidden"
+            animate={section5InView ? "visible" : "hidden"}
+          >
             {audience.map((item, index) => (
-              <Card
-                key={index}
-                className="border-2 rounded-lg shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu hover:scale-[1.03] hover:border-primary-foreground hover:shadow-sm"
-              >
-                <CardHeader className="pb-3">
-                  <div className="text-3xl mb-3">{item.icon}</div>
-                  <CardTitle className="text-xl">
-                    {t(item.titleKey, language)}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    {t(item.descriptionKey, language)}
-                  </p>
-                </CardContent>
-              </Card>
+              <motion.div key={index} variants={fadeInUp}>
+                <Card className="border-2 h-[18rem] rounded-lg shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu hover:scale-[1.03] hover:border-primary-foreground hover:shadow-sm">
+                  <CardHeader className="pb-3">
+                    <div className="text-3xl mb-3">{item.icon}</div>
+                    <CardTitle className="text-xl">
+                      {t(item.titleKey, language)}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      {t(item.descriptionKey, language)}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
-          <div className="text-center max-w-full md:max-w-2xl mx-auto">
+          <motion.div
+            className="text-center max-w-full md:max-w-2xl mx-auto"
+            variants={fadeInUp}
+          >
             <p className="text-base md:text-lg mb-6">
               {t(
                 "Whether you're a solo creator or part of a large team, BotU gives you everything you need to launch smart Telegram bots without touching a single line of code.",
@@ -667,16 +800,27 @@ export default function Landing() {
                 }`}
               />
             </button>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Footer Section */}
-      <div className="w-full max-w-6xl mt-20 mb-10 px-4">
+      <motion.div
+        ref={footerRef}
+        className="w-full max-w-6xl mt-20 mb-10 px-4"
+        initial="hidden"
+        animate={footerInView ? "visible" : "hidden"}
+        variants={fadeIn}
+      >
         <div className="border-t border-border/50 pt-10">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-4 gap-8"
+            variants={staggerContainer}
+            initial="hidden"
+            animate={footerInView ? "visible" : "hidden"}
+          >
             {/* Brand Column */}
-            <div className="flex flex-col gap-4">
+            <motion.div className="flex flex-col gap-4" variants={fadeInUp}>
               <div className="flex items-center gap-2">
                 <Bot className="h-6 w-6 text-primary" />
                 <span className="text-xl font-bold tracking-tight">BotU</span>
@@ -701,10 +845,10 @@ export default function Landing() {
                   <Github className="h-4 w-4" />
                 </Button>
               </div>
-            </div>
+            </motion.div>
 
             {/* Features Column */}
-            <div>
+            <motion.div variants={fadeInUp}>
               <h3 className="text-sm font-semibold mb-4 tracking-wider uppercase">
                 Features
               </h3>
@@ -742,10 +886,10 @@ export default function Landing() {
                   </a>
                 </li>
               </ul>
-            </div>
+            </motion.div>
 
             {/* Resources Column */}
-            <div>
+            <motion.div variants={fadeInUp}>
               <h3 className="text-sm font-semibold mb-4 tracking-wider uppercase">
                 Resources
               </h3>
@@ -783,10 +927,10 @@ export default function Landing() {
                   </a>
                 </li>
               </ul>
-            </div>
+            </motion.div>
 
             {/* Newsletter Column */}
-            <div className="">
+            <motion.div className="" variants={fadeInUp}>
               <h3 className="text-sm font-semibold mb-4 tracking-wider uppercase">
                 Stay Updated
               </h3>
@@ -807,11 +951,14 @@ export default function Landing() {
                   Subscribe
                 </Button>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Bottom Bar */}
-          <div className="mt-12 pt-6 border-t border-border/30 flex flex-col md:flex-row justify-between items-center gap-4">
+          <motion.div
+            className="mt-12 pt-6 border-t border-border/30 flex flex-col md:flex-row justify-between items-center gap-4"
+            variants={fadeInUp}
+          >
             <p className="text-xs text-muted-foreground">
               © {new Date().getFullYear()} BotU. All rights reserved.
             </p>
@@ -835,9 +982,9 @@ export default function Landing() {
                 Cookies
               </a>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

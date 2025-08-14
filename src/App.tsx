@@ -52,8 +52,7 @@ function App() {
   useEffect(() => {
     if (!lenisRef.current) return;
 
-    const handleScroll = () => {
-    };
+    const handleScroll = () => {};
 
     lenisRef.current.on("scroll", handleScroll);
     return () => {
