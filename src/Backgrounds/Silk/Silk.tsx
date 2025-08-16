@@ -6,6 +6,7 @@ import React, { forwardRef, useMemo, useRef, useLayoutEffect } from "react";
 import { Canvas, useFrame, useThree, type RootState } from "@react-three/fiber";
 import { Color, Mesh, ShaderMaterial } from "three";
 import type { IUniform } from "three";
+import { useAnimation } from "@/hooks/useAnimation";
 
 type NormalizedRGB = [number, number, number];
 
@@ -144,6 +145,7 @@ const Silk: React.FC<SilkProps> = ({
   rotation = 0
 }) => {
   const meshRef = useRef<Mesh>(null);
+  const { animationsEnabled } = useAnimation();
 
   const uniforms = useMemo<SilkUniforms>(
     () => ({
@@ -158,7 +160,11 @@ const Silk: React.FC<SilkProps> = ({
   );
 
   return (
-    <Canvas className="md:rounded-xl rounded-none" dpr={[1, 2]} frameloop="always">
+    <Canvas 
+      className="md:rounded-xl rounded-none" 
+      dpr={[1, 2]} 
+      frameloop={animationsEnabled ? "always" : "never"}
+    >
       <SilkPlane ref={meshRef} uniforms={uniforms} />
     </Canvas>
   );

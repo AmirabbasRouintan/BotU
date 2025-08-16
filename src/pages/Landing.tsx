@@ -32,6 +32,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/translations";
 import { Input } from "@/components/ui/input";
 import { motion, useInView } from "framer-motion";
+import { useAnimation } from "@/hooks/useAnimation";
 
 const features1 = [
   {
@@ -200,6 +201,18 @@ const staggerContainer = {
   }
 };
 
+// Add this new variant for when animations are disabled
+const noAnimation = {
+  hidden: { opacity: 1, y: 0 },
+  visible: { opacity: 1, y: 0 }
+};
+
+// Add this new container variant for when animations are disabled
+const noAnimationContainer = {
+  hidden: { opacity: 1 },
+  visible: { opacity: 1 }
+};
+
 const fadeIn = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.8 } }
@@ -212,6 +225,7 @@ const slideInFromBottom = {
 
 export default function Landing() {
   const { language, isRTL } = useLanguage();
+  const { animationsEnabled } = useAnimation();
   const [expandedFeature, setExpandedFeature] = useState<number | null>(null);
   const [sortConfig, setSortConfig] = useState({
     key: "priority",
@@ -248,6 +262,10 @@ export default function Landing() {
     margin: "-100px"
   });
   const footerInView = useInView(footerRef, { once: false, margin: "-100px" });
+
+  // Use conditional variants based on animation preference
+  const sectionVariants = animationsEnabled ? fadeInUp : noAnimation;
+  const containerVariants = animationsEnabled ? staggerContainer : noAnimationContainer;
 
   const sortedFeatures = [...features2].sort((a, b) => {
     if (sortConfig.direction === "ascending") {
@@ -295,9 +313,9 @@ export default function Landing() {
         className="Section-1 w-full max-w-6xl flex flex-col justify-center items-center bg-transparent"
         initial="hidden"
         animate={section1InView ? "visible" : "hidden"}
-        variants={fadeInUp}
+        variants={sectionVariants}
       >
-        <Magnet padding={5000} disabled={false} magnetStrength={50}>
+        <Magnet padding={5000} disabled={!animationsEnabled} magnetStrength={50}>
           <h1 className="font-extralight text-base md:text-lg mb-5 md:mb-7 text-center [text-shadow:_0px_0px_20px_#000000]">
             {t("Telegram bot templates", language)}
           </h1>
@@ -307,7 +325,7 @@ export default function Landing() {
           <div className="w-full max-w-full md:max-w-[600px] mx-auto leading-6">
             <TrueFocus
               sentence={t("Stop building from scratch", language)}
-              manualMode={false}
+              manualMode={!animationsEnabled}
               blurAmount={5}
               borderColor="red"
               animationDuration={2}
@@ -353,17 +371,17 @@ export default function Landing() {
         className="Section-2 mb-16 md:mb-20 text-center w-full max-w-6xl"
         initial="hidden"
         animate={section2InView ? "visible" : "hidden"}
-        variants={fadeInUp}
+        variants={sectionVariants}
       >
         <motion.h2
           className="text-2xl md:text-4xl font-bold drop-shadow-md mb-3 md:mb-4"
-          variants={fadeInUp}
+          variants={sectionVariants}
         >
           {t("Build Your Bot in Just a Few Easy Steps", language)}
         </motion.h2>
         <motion.p
           className="text-base md:text-lg font-extralight drop-shadow-sm max-w-full md:max-w-[50rem] mx-auto"
-          variants={fadeInUp}
+          variants={sectionVariants}
         >
           {t(
             "Our simplified process ensures a fast, user-friendly experience perfect for newcomers.",
@@ -373,11 +391,11 @@ export default function Landing() {
 
         <motion.div
           className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-8 md:mt-12 w-full max-w-6xl mx-auto"
-          variants={staggerContainer}
+          variants={containerVariants}
           initial="hidden"
           animate={section2InView ? "visible" : "hidden"}
         >
-          <motion.div variants={fadeInUp}>
+          <motion.div variants={sectionVariants}>
             <Card className="h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
               <CardHeader className="items-center">
                 <div className="bg-primary/10 text-primary rounded-lg w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
@@ -396,7 +414,7 @@ export default function Landing() {
             </Card>
           </motion.div>
 
-          <motion.div variants={fadeInUp}>
+          <motion.div variants={sectionVariants}>
             <Card className="h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
               <CardHeader className="items-center">
                 <div className="bg-primary/10 text-primary rounded-lg w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
@@ -417,7 +435,7 @@ export default function Landing() {
             </Card>
           </motion.div>
 
-          <motion.div variants={fadeInUp}>
+          <motion.div variants={sectionVariants}>
             <Card className="h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
               <CardHeader className="items-center">
                 <div className="bg-primary/10 text-primary rounded-lg w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
@@ -444,10 +462,10 @@ export default function Landing() {
         className="Section-3 mb-12 py-12 md:mb-16 md:py-16 w-full max-w-6xl"
         initial="hidden"
         animate={section3InView ? "visible" : "hidden"}
-        variants={fadeInUp}
+        variants={sectionVariants}
       >
         <div className="w-full px-0 md:px-4 bg-transparent">
-          <motion.div className="text-center mb-12" variants={fadeInUp}>
+          <motion.div className="text-center mb-12" variants={sectionVariants}>
             <h1 className="text-2xl md:text-4xl font-bold mb-4">
               {t("Powerful Features With Easy Coding", language)}
             </h1>
@@ -465,12 +483,12 @@ export default function Landing() {
 
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
-            variants={staggerContainer}
+            variants={containerVariants}
             initial="hidden"
             animate={section3InView ? "visible" : "hidden"}
           >
             {features1.map((feature, index) => (
-              <motion.div key={index} variants={fadeInUp}>
+              <motion.div key={index} variants={sectionVariants}>
                 <Card className="group h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
                   <CardHeader className="pb-3">
                     <div className="bg-primary/10 text-primary rounded-lg w-12 h-12 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
@@ -498,10 +516,10 @@ export default function Landing() {
         className="Section-4 py-8 md:py-12 w-full max-w-6xl"
         initial="hidden"
         animate={section4InView ? "visible" : "hidden"}
-        variants={slideInFromBottom}
+        variants={animationsEnabled ? slideInFromBottom : noAnimation}
       >
         <div className="w-full px-0 md:px-4">
-          <motion.div className="text-center mb-8 md:mb-10" variants={fadeInUp}>
+          <motion.div className="text-center mb-8 md:mb-10" variants={sectionVariants}>
             <h2 className="text-xl md:text-2xl font-bold mb-3">
               Platform Comparison
             </h2>
@@ -513,7 +531,7 @@ export default function Landing() {
           {/* Desktop/Tablet View */}
           <motion.div
             className="hidden md:block overflow-x-auto text-xs md:text-sm"
-            variants={fadeIn}
+            variants={animationsEnabled ? fadeIn : noAnimation}
           >
             <table className="min-w-full rounded-xl border border-border overflow-hidden shadow-sm">
               <thead>
@@ -620,7 +638,7 @@ export default function Landing() {
           {/* Mobile View - Compact Cards */}
           <motion.div
             className="md:hidden space-y-3"
-            variants={staggerContainer}
+            variants={containerVariants}
             initial="hidden"
             animate={section4InView ? "visible" : "hidden"}
           >
@@ -628,7 +646,7 @@ export default function Landing() {
               <motion.div
                 key={index}
                 className="bg-transparent backdrop-blur-md rounded-xl border border-border p-3 shadow-sm"
-                variants={fadeInUp}
+                variants={sectionVariants}
               >
                 <div
                   className="flex justify-between items-center cursor-pointer"
@@ -704,7 +722,7 @@ export default function Landing() {
           {/* Summary Section */}
           <motion.div
             className="mt-6 p-4 border border-border rounded-xl bg-transparent backdrop-blur-md grid grid-cols-3 gap-4 text-center text-xs md:text-sm"
-            variants={fadeInUp}
+            variants={sectionVariants}
           >
             <div>
               <div className="font-bold mb-1">100%</div>
@@ -722,7 +740,7 @@ export default function Landing() {
 
           <motion.div
             className="mt-4 text-center text-xs text-muted-foreground"
-            variants={fadeInUp}
+            variants={sectionVariants}
           >
             All premium features available in our free plan with no restrictions
           </motion.div>
@@ -735,12 +753,12 @@ export default function Landing() {
         className="Section-5 py-12 md:py-16 w-full max-w-6xl"
         initial="hidden"
         animate={section5InView ? "visible" : "hidden"}
-        variants={slideInFromBottom}
+        variants={animationsEnabled ? slideInFromBottom : noAnimation}
       >
         <div className="w-full px-0 md:px-4 bg-transparent">
           <motion.div
             className="text-center mb-10 md:mb-12"
-            variants={fadeInUp}
+            variants={sectionVariants}
           >
             <h1 className="text-2xl md:text-4xl font-bold mb-4">
               {t("Who is BotU for?", language)}
@@ -759,12 +777,12 @@ export default function Landing() {
 
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-16"
-            variants={staggerContainer}
+            variants={containerVariants}
             initial="hidden"
             animate={section5InView ? "visible" : "hidden"}
           >
             {audience.map((item, index) => (
-              <motion.div key={index} variants={fadeInUp}>
+              <motion.div key={index} variants={sectionVariants}>
                 <Card className="border-2 h-[18rem] rounded-lg shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu hover:scale-[1.03] hover:border-primary-foreground hover:shadow-sm">
                   <CardHeader className="pb-3">
                     <div className="text-3xl mb-3">{item.icon}</div>
@@ -784,7 +802,7 @@ export default function Landing() {
 
           <motion.div
             className="text-center max-w-full md:max-w-2xl mx-auto"
-            variants={fadeInUp}
+            variants={sectionVariants}
           >
             <p className="text-base md:text-lg mb-6">
               {t(
@@ -810,17 +828,17 @@ export default function Landing() {
         className="w-full max-w-6xl mt-20 mb-10 px-4"
         initial="hidden"
         animate={footerInView ? "visible" : "hidden"}
-        variants={fadeIn}
+        variants={animationsEnabled ? fadeIn : noAnimation}
       >
         <div className="border-t border-border/50 pt-10">
           <motion.div
             className="grid grid-cols-1 md:grid-cols-4 gap-8"
-            variants={staggerContainer}
+            variants={containerVariants}
             initial="hidden"
             animate={footerInView ? "visible" : "hidden"}
           >
             {/* Brand Column */}
-            <motion.div className="flex flex-col gap-4" variants={fadeInUp}>
+            <motion.div className="flex flex-col gap-4" variants={sectionVariants}>
               <div className="flex items-center gap-2">
                 <Bot className="h-6 w-6 text-primary" />
                 <span className="text-xl font-bold tracking-tight">BotU</span>
@@ -848,7 +866,7 @@ export default function Landing() {
             </motion.div>
 
             {/* Features Column */}
-            <motion.div variants={fadeInUp}>
+            <motion.div variants={sectionVariants}>
               <h3 className="text-sm font-semibold mb-4 tracking-wider uppercase">
                 Features
               </h3>
@@ -889,7 +907,7 @@ export default function Landing() {
             </motion.div>
 
             {/* Resources Column */}
-            <motion.div variants={fadeInUp}>
+            <motion.div variants={sectionVariants}>
               <h3 className="text-sm font-semibold mb-4 tracking-wider uppercase">
                 Resources
               </h3>
@@ -930,7 +948,7 @@ export default function Landing() {
             </motion.div>
 
             {/* Newsletter Column */}
-            <motion.div className="" variants={fadeInUp}>
+            <motion.div className="" variants={sectionVariants}>
               <h3 className="text-sm font-semibold mb-4 tracking-wider uppercase">
                 Stay Updated
               </h3>
@@ -957,7 +975,7 @@ export default function Landing() {
           {/* Bottom Bar */}
           <motion.div
             className="mt-12 pt-6 border-t border-border/30 flex flex-col md:flex-row justify-between items-center gap-4"
-            variants={fadeInUp}
+            variants={sectionVariants}
           >
             <p className="text-xs text-muted-foreground">
               © {new Date().getFullYear()} BotU. All rights reserved.

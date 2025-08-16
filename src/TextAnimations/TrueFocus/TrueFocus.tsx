@@ -4,6 +4,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { useAnimation } from "@/hooks/useAnimation";
 
 interface TrueFocusProps {
   sentence?: string;
@@ -42,6 +43,7 @@ const TrueFocus: React.FC<TrueFocusProps> = ({
     width: 0,
     height: 0
   });
+  const { animationsEnabled } = useAnimation();
 
   useEffect(() => {
     if (!manualMode) {
@@ -118,11 +120,14 @@ const TrueFocus: React.FC<TrueFocusProps> = ({
           height: focusRect.height,
           opacity: currentIndex >= 0 ? 1 : 0
         }}
-        transition={{
+        transition={animationsEnabled ? {
           type: "spring",
           stiffness: 150,
           damping: 20,
           bounce: 0.2
+        } : {
+          type: "tween",
+          duration: 0
         }}
         style={
           {

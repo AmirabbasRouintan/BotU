@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Github, Menu, Circle } from "lucide-react";
+import { Menu, Circle, Play, Pause, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "./ui/separator";
 import {
@@ -10,8 +10,15 @@ import {
   SheetTitle,
   SheetTrigger
 } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import GlassSurface from "./GlassSurface/GlassSurface";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAnimation } from "@/hooks/useAnimation";
 
 const mainNavItems = [
   { label: "Templates", to: "/Template" },
@@ -22,9 +29,32 @@ const mainNavItems = [
 
 const specialNavItems = [{ label: "SignIn", to: "/auth" }];
 
+// A for Alpha, B for Beta, R for Release
+const versions = [
+  { label: "2.4v", value: "2.4", status: "R" },
+  { label: "2.3v", value: "2.3", status: "R" },
+  { label: "2.2v", value: "2.2", status: "B" },
+  { label: "2.1v", value: "2.1", status: "B" },
+  { label: "1.1v", value: "1.1", status: "A" },
+];
+
+function getVersionStatusStyle(status: string) {
+  switch (status) {
+    case 'R': // Release
+      return 'bg-green-500/20 text-green-500';
+    case 'B': // Beta
+      return 'bg-yellow-500/20 text-yellow-500';
+    case 'A': // Alpha
+      return 'bg-red-500/20 text-red-500';
+    default:
+      return 'bg-gray-500/20 text-gray-500';
+  }
+}
+
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isRTL } = useLanguage();
+  const { animationsEnabled, toggleAnimations } = useAnimation();
 
   return (
     <nav
@@ -71,6 +101,16 @@ function Navbar() {
 
             {/* Special buttons with custom styling */}
             <div className="flex gap-1 items-center">
+              <Button
+                className="rounded-full"
+                size="sm"
+                variant={"ghost"}
+                onClick={toggleAnimations}
+                aria-label={animationsEnabled ? "Disable animations" : "Enable animations"}
+              >
+                {animationsEnabled ? <Pause size={18} /> : <Play size={18} />}
+              </Button>
+              
               {specialNavItems.map(({ label, to }) => (
                 <div key={to}>
                   <Button
@@ -84,27 +124,48 @@ function Navbar() {
                 </div>
               ))}
 
-              <div>
-                <Button
-                  className="rounded-full"
-                  asChild
-                  size="sm"
-                  variant={"default"}
-                >
-                  <a
-                    href="https://github.com/FreaksLxss"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Github size={18} />
-                  </a>
-                </Button>
+              <div className="hidden md:block">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button 
+                      className="rounded-full flex items-center gap-1"
+                      size="sm"
+                      variant="default"
+                    >
+                      <span>2.4v</span>
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-32 bg-transparent backdrop-blur-sm border-transparent">
+                    {versions.map((version) => (
+                      <DropdownMenuItem 
+                        key={version.value}
+                        className="flex justify-between items-center cursor-default bg-background/30"
+                      >
+                        <span>{version.label}</span>
+                        <span className={`flex items-center justify-center rounded-full w-5 h-5 text-xs font-bold ${getVersionStatusStyle(version.status)}`}>
+                          {version.status}
+                        </span>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
           </div>
 
           {/* Mobile Menu Trigger */}
           <div className="md:hidden flex items-center gap-2">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="rounded-full"
+              onClick={toggleAnimations}
+              aria-label={animationsEnabled ? "Disable animations" : "Enable animations"}
+            >
+              {animationsEnabled ? <Pause size={20} /> : <Play size={20} />}
+            </Button>
+            
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="rounded-full">
@@ -148,19 +209,6 @@ function Navbar() {
                     </Button>
                   ))}
 
-                  <Button className="w-[90%]" asChild>
-                    <a
-                      href="https://github.com/FreaksLxss"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Github size={18} />
-                        <span>GitHub</span>
-                      </div>
-                    </a>
-                  </Button>
                 </div>
               </SheetContent>
             </Sheet>

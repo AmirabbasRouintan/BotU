@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useCallback } from "react";
+import { useAnimation } from "@/hooks/useAnimation";
 
 interface ClickSparkProps {
   sparkColor?: string;
@@ -31,6 +32,7 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sparksRef = useRef<Spark[]>([]);
   const startTimeRef = useRef<number | null>(null);
+  const { animationsEnabled } = useAnimation();
 
   // Resize canvas to full window size
   useEffect(() => {
@@ -64,6 +66,8 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
   );
 
   useEffect(() => {
+    if (!animationsEnabled) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -105,10 +109,12 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
 
     animationId = requestAnimationFrame(draw);
     return () => cancelAnimationFrame(animationId);
-  }, [sparkColor, sparkSize, sparkRadius, duration, easeFunc, extraScale]);
+  }, [sparkColor, sparkSize, sparkRadius, duration, easeFunc, extraScale, animationsEnabled]);
 
   // On click anywhere on the document, add sparks at cursor pos
   useEffect(() => {
+    if (!animationsEnabled) return;
+
     const handleClick = (e: MouseEvent) => {
       const canvas = canvasRef.current;
       if (!canvas) return;
@@ -129,7 +135,7 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
 
     document.addEventListener("click", handleClick);
     return () => document.removeEventListener("click", handleClick);
-  }, [sparkCount]);
+  }, [sparkCount, animationsEnabled]);
 
   return (
     <>
