@@ -48,7 +48,10 @@ import {
   LifeBuoy,
   HelpCircle,
   Sparkles,
-  ChevronRight
+  ChevronRight,
+  LayoutDashboard,
+  Settings,
+  Headphones
 } from "lucide-react";
 
 // ================================================================
@@ -70,11 +73,6 @@ type BotStatusItemProps = {
   status: string;
   color: string;
   initials: string;
-};
-
-type ChartLegendProps = {
-  color: string;
-  label: string;
 };
 
 type QuickActionProps = {
@@ -128,7 +126,7 @@ const BotStatusItem = ({
   color,
   initials
 }: BotStatusItemProps) => (
-  <div className="flex items-center justify-between p-2 rounded-lg bg-muted/20 border border-border/30">
+  <div className="flex items-center justify-between p-2 rounded-3xl bg-muted/20 border border-border/30">
     <div className="flex items-center">
       <Avatar className={`w-8 h-8 ${color}`}>
         <AvatarFallback className="text-xs">{initials}</AvatarFallback>
@@ -153,13 +151,6 @@ const BotStatusItem = ({
   </div>
 );
 
-const ChartLegend = ({ color, label }: ChartLegendProps) => (
-  <div className="flex items-center">
-    <div className={`w-3 h-3 rounded-full ${color} mr-1`}></div>
-    <span className="text-xs">{label}</span>
-  </div>
-);
-
 const QuickAction = ({ icon, label, color }: QuickActionProps) => (
   <Button
     variant="outline"
@@ -172,19 +163,19 @@ const QuickAction = ({ icon, label, color }: QuickActionProps) => (
 
 const LoadingSkeleton = () => (
   <div className="flex-1">
-    <div className="p-6 rounded-lg">
-      <Skeleton className="h-8 w-3/4 rounded-md mb-4" />
+    <div className="p-6 rounded-3xl">
+      <Skeleton className="h-8 w-3/4 rounded-xl mb-4" />
       <div className="space-y-3">
-        <Skeleton className="h-4 rounded-md" />
-        <Skeleton className="h-4 rounded-md w-5/6" />
-        <Skeleton className="h-4 rounded-md w-2/3" />
+        <Skeleton className="h-4 rounded-xl" />
+        <Skeleton className="h-4 rounded-xl w-5/6" />
+        <Skeleton className="h-4 rounded-xl w-2/3" />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
         {[...Array(3)].map((_, i) => (
-          <Skeleton key={i} className="h-40 rounded-xl" />
+          <Skeleton key={i} className="h-40 rounded-3xl" />
         ))}
       </div>
-      <Skeleton className="h-10 w-32 rounded-md mt-6" />
+      <Skeleton className="h-10 w-32 rounded-xl mt-6" />
     </div>
   </div>
 );
@@ -413,10 +404,10 @@ const AIHelpTab = () => {
   };
 
   return (
-    <Card className="bg-[#85858510] backdrop-blur-xl rounded-2xl border border-border shadow-xl">
+    <Card className="bg-[#85858510] backdrop-blur-xl rounded-3xl border border-border shadow-xl">
       <CardHeader>
         <CardTitle className="flex items-center">
-          <Sparkles className="mr-2 h-5 w-5 text-yellow-400" />
+          <Sparkles className="mr-2 h-5 w-5 " />
           AI Assistant
         </CardTitle>
         <CardDescription>
@@ -425,7 +416,7 @@ const AIHelpTab = () => {
       </CardHeader>
 
       <CardContent>
-        <div className="bg-muted/20 rounded-lg p-4 h-[50vh] overflow-y-auto text-sm font-light">
+        <div className="bg-muted/20 rounded-3xl p-4 h-[50vh] overflow-y-auto text-sm font-light">
           <div className="space-y-4">
             {messages.map((message) => {
               const messageParts = parseMessage(message.text);
@@ -445,7 +436,7 @@ const AIHelpTab = () => {
 
                   <div
                     className={`
-                      rounded-xl p-3 max-w-[80%]
+                      rounded-3xl p-3 max-w-[80%]
                       ${
                         message.isUser
                           ? "bg-primary text-primary-foreground"
@@ -506,7 +497,7 @@ const AIHelpTab = () => {
                             break;
                           case "code":
                             element = (
-                              <div className="mt-2 bg-neutral-900 rounded-lg overflow-hidden border border-neutral-700">
+                              <div className="mt-2 bg-neutral-900 rounded-3xl overflow-hidden border border-neutral-700">
                                 <div className="bg-neutral-800 px-3 py-1 text-xs text-neutral-300 flex justify-between items-center">
                                   <span className="font-mono uppercase text-[10px] tracking-wider">
                                     {part.language || "code"}
@@ -594,7 +585,7 @@ const AIHelpTab = () => {
                     AI
                   </AvatarFallback>
                 </Avatar>
-                <div className="bg-secondary text-secondary-foreground rounded-xl p-3 max-w-[80%]">
+                <div className="bg-secondary text-secondary-foreground rounded-3xl p-3 max-w-[80%]">
                   <div className="flex space-x-1">
                     <div className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"></div>
                     <div
@@ -682,7 +673,7 @@ const AIHelpTab = () => {
 };
 
 const DashboardTab = () => (
-  <div className="flex flex-col gap-4 border border-border rounded-2xl p-4 bg-[#ffffff08] backdrop-blur">
+  <div className="flex flex-col gap-4 border border-border rounded-3xl p-4 bg-[#ffffff08] backdrop-blur">
     {/* Stats Cards */}
     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
       <StatCard
@@ -729,7 +720,7 @@ const DashboardTab = () => (
             {[...Array(5)].map((_, i) => (
               <div
                 key={i}
-                className="flex items-start p-2 rounded hover:bg-muted/20 transition-colors border border-border"
+                className="flex items-start p-2 hover:bg-muted/20 transition-colors border border-border rounded-xl"
               >
                 <div className="bg-primary/10 p-1.5 rounded-full mr-2 mt-0.5">
                   <Edit className="h-3 w-3 text-primary" />
@@ -819,34 +810,45 @@ const DashboardTab = () => (
 
       <Card className="bg-[#0000005b] backdrop-blur border border-border p-4">
         <CardHeader className="p-0 mb-3">
-          <CardTitle className="text-base flex items-center">
-            <Brain className="mr-2 h-4 w-4 text-primary" />
+          <CardTitle className="text-base flex items-center text-neutral-200">
+            <Brain className="mr-2 h-4 w-4 text-neutral-400" />
             AI Model Distribution
           </CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <div className="h-40 flex items-center justify-center">
-            <div className="relative w-32 h-32 border border-border rounded-full">
+            <div className="relative w-32 h-32">
               <div
-                className="absolute inset-0 rounded-full border-[8px] border-transparent"
+                className="absolute inset-0 rounded-full"
                 style={{
                   background: `conic-gradient(
-                    #3b82f6 0% 45%, 
-                    #8b5cf6 45% 75%, 
-                    #10b981 75% 100%
-                  )`
+              #d1d5db 0% 45%, 
+              #9ca3af 45% 75%, 
+              #6b7280 75% 100%
+            )`
                 }}
               ></div>
-              <div className="absolute inset-4 rounded-full bg-card"></div>
+              <div className="absolute inset-4 rounded-full bg-[#0000005b] backdrop-blur"></div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-xs font-semibold">Models</span>
+                <span className="text-xs font-semibold text-neutral-300">
+                  Models
+                </span>
               </div>
             </div>
           </div>
-          <div className="flex justify-center gap-3 mt-2">
-            <ChartLegend color="bg-blue-500" label="GPT-4 (45%)" />
-            <ChartLegend color="bg-purple-500" label="Claude (30%)" />
-            <ChartLegend color="bg-green-500" label="Gemini (25%)" />
+          <div className="flex flex-wrap justify-center gap-3 mt-2">
+            <div className="flex items-center">
+              <div className="w-3 h-3 rounded-full bg-neutral-300 mr-2"></div>
+              <span className="text-xs text-neutral-400">GPT-4 (45%)</span>
+            </div>
+            <div className="flex items-center">
+              <div className="w-3 h-3 rounded-full bg-neutral-400 mr-2"></div>
+              <span className="text-xs text-neutral-400">Claude (30%)</span>
+            </div>
+            <div className="flex items-center">
+              <div className="w-3 h-3 rounded-full bg-neutral-500 mr-2"></div>
+              <span className="text-xs text-neutral-400">Gemini (25%)</span>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -889,7 +891,7 @@ const DashboardTab = () => (
 );
 
 const MyBotsTab = () => (
-  <Card className="bg-[#85858510] backdrop-blur-xl rounded-2xl border border-border shadow-xl">
+  <Card className="bg-[#85858510] backdrop-blur-xl rounded-3xl border border-border shadow-xl">
     <CardHeader className="flex flex-col lg:flex-row items-start justify-between">
       <div className="flex-1">
         <CardTitle className="text-2xl md:text-3xl font-bold">
@@ -1221,7 +1223,7 @@ const MyBotsTab = () => (
             <Label className="text-muted-foreground mb-3 block">
               Model Capabilities
             </Label>
-            <div className="overflow-x-auto bg-[#ffffff00] backdrop-blur rounded-lg">
+            <div className="overflow-x-auto bg-[#ffffff00] backdrop-blur rounded-3xl">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -1523,10 +1525,10 @@ const MyBotsTab = () => (
               Preview how your bot responds with current settings
             </CardDescription>
           </CardHeader>
-          <CardContent className="bg-muted/20 rounded-lg p-4 h-64 overflow-y-auto">
+          <CardContent className="bg-muted/20 rounded-3xl p-4 h-64 overflow-y-auto">
             <div className="space-y-4">
               <div className="flex justify-end">
-                <div className="bg-primary text-primary-foreground rounded-xl p-3 max-w-[80%]">
+                <div className="bg-primary text-primary-foreground rounded-3xl p-3 max-w-[80%]">
                   What can you help me with?
                 </div>
               </div>
@@ -1534,7 +1536,7 @@ const MyBotsTab = () => (
                 <Avatar className="mr-2 h-6 w-6">
                   <AvatarFallback>B</AvatarFallback>
                 </Avatar>
-                <div className="bg-secondary text-secondary-foreground rounded-xl p-3 max-w-[80%]">
+                <div className="bg-secondary text-secondary-foreground rounded-3xl p-3 max-w-[80%]">
                   I can answer questions, explain concepts, help with
                   troubleshooting, and more based on your configured knowledge
                   sources!
@@ -1573,7 +1575,7 @@ const MyBotsTab = () => (
 );
 
 const SettingsTab = () => (
-  <Card className="bg-[#85858510] backdrop-blur-xl rounded-2xl border border-border shadow-xl">
+  <Card className="bg-[#85858510] backdrop-blur-xl rounded-3xl border border-border shadow-xl">
     <CardHeader>
       <CardTitle className="flex items-center">
         <Cog className="mr-2 h-5 w-5" />
@@ -1713,7 +1715,7 @@ const SettingsTab = () => (
 );
 
 const NotificationTab = () => (
-  <Card className="bg-[#85858510] backdrop-blur-xl rounded-2xl border border-border shadow-xl">
+  <Card className="bg-[#85858510] backdrop-blur-xl rounded-3xl border border-border shadow-xl">
     <CardHeader>
       <CardTitle className="flex items-center">
         <Bell className="mr-2 h-5 w-5" />
@@ -1817,7 +1819,7 @@ const NotificationTab = () => (
 );
 
 const HelpTab = () => (
-  <Card className="bg-[#85858510] backdrop-blur-xl rounded-2xl border border-border shadow-xl">
+  <Card className="bg-[#85858510] backdrop-blur-xl rounded-3xl border border-border shadow-xl">
     <CardHeader>
       <CardTitle className="flex items-center">
         <HelpCircle className="mr-2 h-5 w-5" />
@@ -1897,7 +1899,7 @@ const HelpTab = () => (
 );
 
 const SupportTab = () => (
-  <Card className="bg-[#85858510] backdrop-blur-xl rounded-2xl border border-border shadow-xl">
+  <Card className="bg-[#85858510] backdrop-blur-xl rounded-3xl border border-border shadow-xl">
     <CardHeader>
       <CardTitle className="flex items-center">
         <LifeBuoy className="mr-2 h-5 w-5" />
@@ -1927,7 +1929,7 @@ const SupportTab = () => (
               </div>
               <div>
                 <Label>Attachments</Label>
-                <div className="border border-dashed rounded-lg p-4 text-center cursor-pointer hover:bg-muted/10 transition-colors">
+                <div className="border border-dashed rounded-3xl p-4 text-center cursor-pointer hover:bg-muted/10 transition-colors">
                   <Plus className="h-6 w-6 mx-auto text-muted-foreground" />
                   <p className="text-sm text-muted-foreground mt-2">
                     Click to add screenshots or files
@@ -1999,47 +2001,54 @@ export default function Template() {
           onValueChange={setActiveTab}
           className="w-full flex flex-col md:flex-row"
         >
-          <TabsList className="w-auto flex flex-row md:flex-col overflow-auto items-center justify-start pb-0 pt-1 pl-1 pr-1 md:p-2 md:mx-2 mx-0 bg-[#85858510] backdrop-blur border border-border shadow-xl rounded-xl transparent-scrollbar">
+          <TabsList className="w-auto flex flex-row md:flex-col overflow-auto items-center justify-start pb-0 pt-1.5 pl-1.5 pr-1.5 md:p-2 md:mx-2 mx-0 bg-[#85858510] backdrop-blur border border-border shadow-xl rounded-3xl transparent-scrollbar">
             <TabsTrigger
               value="dashboard"
-              className="px-3 py-2 text-sm md:text-base md:text-left"
+              className="px-3 py-2 text-sm md:text-base md:text-left flex items-center gap-2 rounded-2xl"
             >
+              <LayoutDashboard className="h-4 w-4 md:h-5 md:w-5" />
               Dashboard
             </TabsTrigger>
             <TabsTrigger
               value="mybots"
-              className="px-3 py-2 text-sm md:text-base md:text-left"
+              className="px-3 py-2 text-sm md:text-base md:text-left flex items-center gap-2 rounded-2xl"
             >
+              <Bot className="h-4 w-4 md:h-5 md:w-5" />
               My Bots
             </TabsTrigger>
             <TabsTrigger
               value="settings"
-              className="px-3 py-2 text-sm md:text-base md:text-left"
+              className="px-3 py-2 text-sm md:text-base md:text-left flex items-center gap-2 rounded-2xl"
             >
+              <Settings className="h-4 w-4 md:h-5 md:w-5" />
               Settings
             </TabsTrigger>
             <TabsTrigger
               value="notification"
-              className="px-3 py-2 text-sm md:text-base md:text-left"
+              className="px-3 py-2 text-sm md:text-base md:text-left flex items-center gap-2 rounded-2xl"
             >
+              <Bell className="h-4 w-4 md:h-5 md:w-5" />
               Notification
             </TabsTrigger>
             <TabsTrigger
               value="help"
-              className="px-3 py-2 text-sm md:text-base md:text-left"
+              className="px-3 py-2 text-sm md:text-base md:text-left flex items-center gap-2 rounded-2xl"
             >
+              <HelpCircle className="h-4 w-4 md:h-5 md:w-5" />
               Help
             </TabsTrigger>
             <TabsTrigger
               value="support"
-              className="px-3 py-2 text-sm md:text-base md:text-left"
+              className="px-3 py-2 text-sm md:text-base md:text-left flex items-center gap-2 rounded-2xl"
             >
+              <Headphones className="h-4 w-4 md:h-5 md:w-5" />
               Support
             </TabsTrigger>
             <TabsTrigger
               value="aihelp"
-              className="px-3 py-2 mb-auto text-sm md:text-base md:text-left"
+              className="px-3 py-2 mb-auto text-sm md:text-base md:text-left flex items-center gap-2 rounded-2xl"
             >
+              <Sparkles className="h-4 w-4 md:h-5 md:w-5" />
               AI Help
             </TabsTrigger>
           </TabsList>
