@@ -57,6 +57,7 @@ import {
 // ================================================================
 // TYPES
 // ================================================================
+
 type Card = { id: string; title: string };
 type ColumnData = { id: string; title: string; cards: Card[] };
 
@@ -93,6 +94,7 @@ type MessagePart =
 // ================================================================
 // CONSTANTS
 // ================================================================
+
 const initialCommands: ColumnData[] = [
   {
     id: "todo",
@@ -107,6 +109,7 @@ const initialCommands: ColumnData[] = [
 // ================================================================
 // HELPER COMPONENTS
 // ================================================================
+
 const StatCard = ({ title, value, icon, change, color }: StatCardProps) => (
   <Card className="bg-[#0000005b] backdrop-blur border border-border p-3">
     <div className="flex justify-between items-start">
@@ -183,6 +186,7 @@ const LoadingSkeleton = () => (
 // ================================================================
 // TAB COMPONENTS
 // ================================================================
+
 const AIHelpTab = () => {
   const [messages, setMessages] = useState([
     {
