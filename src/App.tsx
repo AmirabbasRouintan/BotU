@@ -8,6 +8,7 @@ import ClickSpark from "./Animations/ClickSpark/ClickSpark";
 import Silk from "@/Backgrounds/Silk/Silk";
 import Template from "./pages/Template";
 import AuthPage from "./pages/AuthPage";
+import Nsfw from "./pages/nsfw";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AnimationProvider } from "./contexts/AnimationContext";
 
@@ -89,6 +90,7 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/template" element={<Template />} />
               <Route path="/auth" element={<AuthPage />} />
+              <Route path="/nsfw" element={<Nsfw />} /> {/* Add NSFW route */}
             </Routes>
           </>
         </ClickSpark>
