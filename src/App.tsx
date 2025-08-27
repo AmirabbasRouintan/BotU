@@ -75,7 +75,7 @@ function App() {
           duration={400}
         >
           <>
-            <div className="fixed inset-1.5 z-[-1]">
+            <div className="fixed inset-1.5 z-[-1] border border-border rounded-xl">
               <Silk
                 speed={20}
                 scale={1}

@@ -265,7 +265,9 @@ export default function Landing() {
 
   // Use conditional variants based on animation preference
   const sectionVariants = animationsEnabled ? fadeInUp : noAnimation;
-  const containerVariants = animationsEnabled ? staggerContainer : noAnimationContainer;
+  const containerVariants = animationsEnabled
+    ? staggerContainer
+    : noAnimationContainer;
 
   const sortedFeatures = [...features2].sort((a, b) => {
     if (sortConfig.direction === "ascending") {
@@ -315,7 +317,11 @@ export default function Landing() {
         animate={section1InView ? "visible" : "hidden"}
         variants={sectionVariants}
       >
-        <Magnet padding={5000} disabled={!animationsEnabled} magnetStrength={50}>
+        <Magnet
+          padding={5000}
+          disabled={!animationsEnabled}
+          magnetStrength={50}
+        >
           <h1 className="font-extralight text-base md:text-lg mb-5 md:mb-7 text-center [text-shadow:_0px_0px_20px_#000000]">
             {t("Telegram bot templates", language)}
           </h1>
@@ -349,13 +355,13 @@ export default function Landing() {
 
         <div className="flex flex-col md:flex-row mt-8 md:mt-12 mb-16 md:mb-28 gap-4 md:gap-5">
           <Button
-            className="backdrop-blur-lg py-6 md:py-8 px-6 text-xl md:text-2xl font-light hover:-translate-y-1 transition-transform duration-300 ease-in-out rounded-xl"
+            className="backdrop-blur-lg py-6 md:py-8 px-6 text-xl md:text-2xl font-light hover:-translate-y-1 transition-transform duration-300 ease-in-out rounded-2xl"
             variant="default"
           >
             {t("Get Started", language)}
           </Button>
           <Button
-            className="backdrop-blur-lg py-6 md:py-8 px-6 text-xl md:text-2xl font-light hover:-translate-y-1 transition-transform duration-300 ease-in-out rounded-xl"
+            className="backdrop-blur-lg py-6 md:py-8 px-6 text-xl md:text-2xl font-light hover:-translate-y-1 transition-transform duration-300 ease-in-out rounded-2xl"
             variant="outline"
           >
             {t("Pro Trial", language)}
@@ -396,9 +402,9 @@ export default function Landing() {
           animate={section2InView ? "visible" : "hidden"}
         >
           <motion.div variants={sectionVariants}>
-            <Card className="h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
+            <Card className="h-full border-2 rounded-3xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
               <CardHeader className="items-center">
-                <div className="bg-primary/10 text-primary rounded-lg w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
+                <div className="bg-primary/10 text-primary rounded-2xl w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
                   <Wrench className="w-8 h-8" />
                 </div>
                 <CardTitle>{t("Select Command Type", language)}</CardTitle>
@@ -415,9 +421,9 @@ export default function Landing() {
           </motion.div>
 
           <motion.div variants={sectionVariants}>
-            <Card className="h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
+            <Card className="h-full border-2 rounded-3xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
               <CardHeader className="items-center">
-                <div className="bg-primary/10 text-primary rounded-lg w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
+                <div className="bg-primary/10 text-primary rounded-2xl w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
                   <Sparkles className="w-8 h-8" />
                 </div>
                 <CardTitle>
@@ -436,9 +442,9 @@ export default function Landing() {
           </motion.div>
 
           <motion.div variants={sectionVariants}>
-            <Card className="h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
+            <Card className="h-full border-2 rounded-3xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
               <CardHeader className="items-center">
-                <div className="bg-primary/10 text-primary rounded-lg w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
+                <div className="bg-primary/10 text-primary rounded-2xl w-14 h-14 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
                   <Rocket className="w-8 h-8" />
                 </div>
                 <CardTitle>{t("Deploy Instantly", language)}</CardTitle>
@@ -489,9 +495,9 @@ export default function Landing() {
           >
             {features1.map((feature, index) => (
               <motion.div key={index} variants={sectionVariants}>
-                <Card className="group h-full border-2 rounded-xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
+                <Card className="group h-full border-2 rounded-3xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu origin-center hover:scale-[1.03] hover:border-primary-foreground hover:shadow-md hover:z-10">
                   <CardHeader className="pb-3">
-                    <div className="bg-primary/10 text-primary rounded-lg w-12 h-12 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
+                    <div className="bg-primary/10 text-primary rounded-2xl w-12 h-12 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
                       <span className="text-2xl">{feature.icon}</span>
                     </div>
                     <CardTitle className="text-xl">
@@ -519,7 +525,10 @@ export default function Landing() {
         variants={animationsEnabled ? slideInFromBottom : noAnimation}
       >
         <div className="w-full px-0 md:px-4">
-          <motion.div className="text-center mb-8 md:mb-10" variants={sectionVariants}>
+          <motion.div
+            className="text-center mb-8 md:mb-10"
+            variants={sectionVariants}
+          >
             <h2 className="text-xl md:text-2xl font-bold mb-3">
               Platform Comparison
             </h2>
@@ -533,7 +542,7 @@ export default function Landing() {
             className="hidden md:block overflow-x-auto text-xs md:text-sm"
             variants={animationsEnabled ? fadeIn : noAnimation}
           >
-            <table className="min-w-full rounded-xl border border-border overflow-hidden shadow-sm">
+            <table className="min-w-full rounded-2xl border border-border overflow-hidden shadow-sm">
               <thead>
                 <tr className="bg-transparent backdrop-blur-md border-b border-border">
                   <th
@@ -645,7 +654,7 @@ export default function Landing() {
             {sortedFeatures.map((feat, index) => (
               <motion.div
                 key={index}
-                className="bg-transparent backdrop-blur-md rounded-xl border border-border p-3 shadow-sm"
+                className="bg-transparent backdrop-blur-md rounded-2xl border border-border p-3 shadow-sm"
                 variants={sectionVariants}
               >
                 <div
@@ -721,7 +730,7 @@ export default function Landing() {
 
           {/* Summary Section */}
           <motion.div
-            className="mt-6 p-4 border border-border rounded-xl bg-transparent backdrop-blur-md grid grid-cols-3 gap-4 text-center text-xs md:text-sm"
+            className="mt-6 p-4 border border-border rounded-3xl bg-transparent backdrop-blur-md grid grid-cols-3 gap-4 text-center text-xs md:text-sm"
             variants={sectionVariants}
           >
             <div>
@@ -783,7 +792,7 @@ export default function Landing() {
           >
             {audience.map((item, index) => (
               <motion.div key={index} variants={sectionVariants}>
-                <Card className="border-2 h-[18rem] rounded-lg shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu hover:scale-[1.03] hover:border-primary-foreground hover:shadow-sm">
+                <Card className="border-2 h-[18rem] rounded-3xl shadow-sm bg-transparent backdrop-blur-md transition-all duration-300 transform-gpu hover:scale-[1.03] hover:border-primary-foreground hover:shadow-sm">
                   <CardHeader className="pb-3">
                     <div className="text-3xl mb-3">{item.icon}</div>
                     <CardTitle className="text-xl">
@@ -838,7 +847,10 @@ export default function Landing() {
             animate={footerInView ? "visible" : "hidden"}
           >
             {/* Brand Column */}
-            <motion.div className="flex flex-col gap-4" variants={sectionVariants}>
+            <motion.div
+              className="flex flex-col gap-4"
+              variants={sectionVariants}
+            >
               <div className="flex items-center gap-2">
                 <Bot className="h-6 w-6 text-primary" />
                 <span className="text-xl font-bold tracking-tight">BotU</span>
@@ -959,12 +971,12 @@ export default function Landing() {
                 <Input
                   type="email"
                   placeholder="Your email"
-                  className="bg-transparent backdrop-blur rounded-xl border border-border/50"
+                  className="bg-transparent backdrop-blur rounded-2xl border border-border/50"
                 />
                 <Button
                   variant="outline"
                   size="sm"
-                  className="rounded-xl backdrop-blur mt-1"
+                  className="rounded-2xl backdrop-blur mt-1"
                 >
                   Subscribe
                 </Button>

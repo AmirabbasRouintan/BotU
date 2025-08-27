@@ -129,7 +129,7 @@ const BotStatusItem = ({
   color,
   initials
 }: BotStatusItemProps) => (
-  <div className="flex items-center justify-between p-2 rounded-3xl bg-muted/20 border border-border/30">
+  <div className="flex items-center justify-between p-2 rounded-2xl bg-muted/20 border border-border/30">
     <div className="flex items-center">
       <Avatar className={`w-8 h-8 ${color}`}>
         <AvatarFallback className="text-xs">{initials}</AvatarFallback>
