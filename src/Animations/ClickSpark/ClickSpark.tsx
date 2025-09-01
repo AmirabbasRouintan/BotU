@@ -34,7 +34,6 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
   const startTimeRef = useRef<number | null>(null);
   const { animationsEnabled } = useAnimation();
 
-  // Resize canvas to full window size
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -111,7 +110,6 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
     return () => cancelAnimationFrame(animationId);
   }, [sparkColor, sparkSize, sparkRadius, duration, easeFunc, extraScale, animationsEnabled]);
 
-  // On click anywhere on the document, add sparks at cursor pos
   useEffect(() => {
     if (!animationsEnabled) return;
 

@@ -136,11 +136,11 @@ export default function Nsfw() {
     } finally {
       setLoading(false);
     }
-  }, []); // Empty dependency array as API_CONFIG is static
+  }, []); 
 
   useEffect(() => {
     fetchImage();
-  }, [fetchImage]); // Now fetchImage is a dependency but it's memoized with useCallback
+  }, [fetchImage]); 
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[90vh] gap-6 text-white p-4">
@@ -200,7 +200,6 @@ export default function Nsfw() {
         </div>
       </div>
 
-      {/* API Info Display */}
       {apiInUse && (
         <div className="rounded-lg px-4 py-2">
           <p className="text-center">
@@ -215,7 +214,6 @@ export default function Nsfw() {
         </div>
       )}
 
-      {/* Image Metadata */}
       {imageData && (
         <div className="rounded-lg p-4 max-w-md">
           <h3 className="font-bold mb-2">Image Details:</h3>

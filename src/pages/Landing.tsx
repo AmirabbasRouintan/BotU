@@ -185,7 +185,6 @@ const audience = [
   }
 ];
 
-// Animation variants
 const fadeInUp = {
   hidden: { opacity: 0, y: 50 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
@@ -201,13 +200,11 @@ const staggerContainer = {
   }
 };
 
-// Add this new variant for when animations are disabled
 const noAnimation = {
   hidden: { opacity: 1, y: 0 },
   visible: { opacity: 1, y: 0 }
 };
 
-// Add this new container variant for when animations are disabled
 const noAnimationContainer = {
   hidden: { opacity: 1 },
   visible: { opacity: 1 }
@@ -232,7 +229,6 @@ export default function Landing() {
     direction: "ascending"
   });
 
-  // Create refs for animation triggers
   const section1Ref = useRef(null);
   const section2Ref = useRef(null);
   const section3Ref = useRef(null);
@@ -240,7 +236,6 @@ export default function Landing() {
   const section5Ref = useRef(null);
   const footerRef = useRef(null);
 
-  // Check when sections are in view
   const section1InView = useInView(section1Ref, {
     once: false,
     margin: "-100px"
@@ -263,7 +258,6 @@ export default function Landing() {
   });
   const footerInView = useInView(footerRef, { once: false, margin: "-100px" });
 
-  // Use conditional variants based on animation preference
   const sectionVariants = animationsEnabled ? fadeInUp : noAnimation;
   const containerVariants = animationsEnabled
     ? staggerContainer

@@ -1,7 +1,3 @@
-/*
-	Installed from https://reactbits.dev/ts/tailwind/
-*/
-
 import React, { useEffect, useRef, RefObject } from "react";
 import { gsap } from "gsap";
 

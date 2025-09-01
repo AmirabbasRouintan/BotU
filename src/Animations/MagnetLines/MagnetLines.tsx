@@ -1,7 +1,3 @@
-/*
-	Installed from https://reactbits.dev/ts/tailwind/
-*/
-
 import React, { useRef, useEffect, CSSProperties } from "react";
 
 interface MagnetLinesProps {
