@@ -84,31 +84,6 @@ NODE_ENV=development
 
 ---
 
-## 🎮 Usage
-
-### Pages
-
-| Page | Route | Description |
-|------|-------|-------------|
-| **Landing** | `/` | Marketing page with features, comparisons, and bilingual support |
-| **Auth** | `/auth` | Login and registration with JWT |
-| **Home** | `/home` | Post-login landing page |
-| **Dashboard** | `/template` | Full dashboard with 7 tabs |
-
-### Dashboard Tabs
-
-| Tab | Description |
-|-----|-------------|
-| **Dashboard** | Analytics, bot status, activity feed, usage trends, AI model distribution |
-| **My Bots** | Bot configuration, appearance, AI behavior, custom commands, test conversation |
-| **Settings** | Profile, password, 2FA, API keys |
-| **Notifications** | Email alerts, in-app notifications, sound, DND hours |
-| **Help** | Getting started, command reference, troubleshooting, FAQ |
-| **Support** | Contact form, support resources |
-| **AI Help** | Gemini-powered AI assistant with rich message formatting |
-
----
-
 ## 🧠 Tech Stack
 
 <div align="center">
