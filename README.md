@@ -1,150 +1,188 @@
-# 🤖 Telegram Bot Builder Platform 🚀
-
-![Project Preview](<img width="2536" height="1433" alt="image" src="https://github.com/user-attachments/assets/bcd7ea02-7a24-4cad-a771-60fd60e2a4da" />)
-
-> **Create powerful Telegram bots without coding** using our intuitive drag-and-drop interface and templates!
-
-## 🌟 Features
-
-### 🎨 Visual Bot Builder
-- **Drag-and-drop interface** for creating conversation flows
-- **Pre-built templates** for common bot types (customer support, surveys, notifications)
-- **Kanban-style workflow** for managing bot components
-
-### ⚡ Real-time Dashboard
-- **Bot performance analytics** with charts and metrics
-- **Message management** with conversation history
-- **User management** system for bot subscribers
-
-### 🔒 Secure Infrastructure
-- **End-to-end encryption** for all communications
-- **API token management** with secure storage
-- **Permission controls** for team collaboration
-
-### 🔄 Integration Capabilities
-- **REST API support** for connecting external services
-- **Webhook configuration** for real-time updates
-- **Plugin ecosystem** for extending functionality
-
-### 🤖 AI-Powered Assistance
-- **AI Help Tab** with Google Gemini integration
-- **Instant support** for bot development questions
-- **Quick questions** for common issues
-- **Real-time chat** interface with message history
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js v16+
-- MongoDB
-- Telegram API Token
-
-### Installation
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/telegram-bot-builder.git
-
-# Navigate to project directory
-cd telegram-bot-builder
-
-# Install dependencies
-npm install
-
-# Set up environment variables
-cp .env.example .env
-
-# Start development server
-npm run dev
-```
-
-### Configuration
-Create `.env` file with the following variables:
-```env
-# Google Generative AI API Key for the AI Help feature
-# Get your API key from https://aistudio.google.com/
-VITE_GEMINI_API_KEY=your_gemini_api_key_here
-
-# Telegram Bot API Token
-TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
-
-# Backend API URL
-VITE_API_URL=http://localhost:8000
-
-# Node Environment
-NODE_ENV=development
-```
-
-## 🧩 Project Structure
-
-```
-telegram-bot-builder/
-├── components/       # Reusable UI components
-├── lib/              # Utility functions and API handlers
-├── pages/            # Application routes
-├── public/           # Static assets
-├── styles/           # Global styles
-├── types/            # TypeScript definitions
-└── utils/            # Helper functions
-```
-
-## 🖥️ Demo Preview
-
-### Bot Dashboard
-![Dashboard Preview](https://via.placeholder.com/600x300.png?text=Bot+Dashboard+Interface)
-
-### Flow Builder
-![Flow Builder](https://via.placeholder.com/600x300.png?text=Drag%26Drop+Bot+Flow+Builder)
-
-### Analytics
-![Analytics](https://via.placeholder.com/600x300.png?text=Bot+Performance+Analytics)
-
-### AI Help
-![AI Help](https://via.placeholder.com/600x300.png?text=AI+Help+Assistant)
-
-## 🛠 Technologies Used
-
-- **Frontend**: 
-  ![Next.js](https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&logoColor=white)
-  ![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)
-  ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
-  ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white)
-
-- **Backend**: 
-  ![Node.js](https://img.shields.io/badge/Node.js-339933?logo=nodedotjs&logoColor=white)
-  ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
-  ![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=white)
-
-- **Authentication**: 
-  ![NextAuth.js](https://img.shields.io/badge/NextAuth.js-000000?logo=nextdotjs&logoColor=white)
-
-- **AI Integration**:
-  ![Google Gemini](https://img.shields.io/badge/Google_Gemini-4285F4?logo=googledialogflow&logoColor=white)
-
-- **UI Components**: 
-  ![Shadcn UI](https://img.shields.io/badge/Shadcn_UI-000000?logo=react&logoColor=white)
-  ![Lucide Icons](https://img.shields.io/badge/Lucide_Icons-000000?logo=react&logoColor=white)
-
-## 🤝 Contributing
-
-We welcome contributions! Please follow these steps:
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 📧 Contact
-
-For inquiries or support: 
-- Email: support@botbuilder.com
-- Telegram: [@BotBuilderSupport](https://t.me/BotBuilderSupport)
-- Twitter: [@BotBuilderApp](https://twitter.com/BotBuilderApp)
+<div align="center">
+  <h2>
+    <span style="color: #d3869b; font-family: monospace; font-size: 1.6em;">❝ BotU ❞</span>
+  </h2>
+  <p style="font-size: 1.1em; color: #83a598; margin-top: 5px;">
+    <strong>A no-code Telegram bot builder platform with AI-powered assistance</strong>
+  </p>
+  <br>
+  <p>
+    <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react" alt="React">
+    <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript" alt="TypeScript">
+    <img src="https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite" alt="Vite">
+    <img src="https://img.shields.io/badge/Django-4.2-092E20?style=for-the-badge&logo=django" alt="Django">
+    <img src="https://img.shields.io/badge/Tailwind-4-06B6D4?style=for-the-badge&logo=tailwindcss" alt="Tailwind">
+    <img src="https://img.shields.io/badge/Gemini-4285F4?style=for-the-badge&logo=googlegemini" alt="Gemini">
+  </p>
+</div>
 
 ---
 
-**Ready to build your first Telegram bot?** [Try our live demo!](https://demo.botbuilder.com) 🚀
+## ✨ Features
+
+<div align="center">
+
+| Feature | Description |
+|---------|-------------|
+| 🤖 **Bot Builder** | Create and configure Telegram bots visually through a web dashboard |
+| 🎨 **Bot Appearance** | Customize bot name, avatar, colors, and description |
+| 💬 **Command Builder** | Define custom commands with responses, permissions, and activation toggles |
+| 🤖 **AI Integration** | Google Gemini-powered AI assistant and bot intelligence |
+| 📊 **Analytics Dashboard** | Real-time bot statistics, activity feed, and usage trends |
+| 🔐 **Authentication** | JWT-based user registration and login system |
+| 🌐 **Bilingual** | Full English and Persian (Farsi) language support with RTL |
+| ⚙️ **Settings** | Profile management, password change, 2FA, API keys |
+| 🔔 **Notifications** | Email and in-app notification preferences |
+| 🧩 **Help Center** | FAQ, command reference, troubleshooting, and support |
+
+</div>
+
+---
+
+## 🚀 Installation
+
+### Prerequisites
+
+- **Node.js v18+** (for frontend)
+- **Python 3.8+** with pip (for backend)
+- **Google Gemini API key** (for AI features)
+
+### Frontend Setup
+
+```bash
+git clone https://github.com/AmirabbasRouintan/BotU.git
+cd BotU
+npm install
+cp .env.example .env
+npm run dev
+```
+
+The frontend runs on `http://localhost:5173`.
+
+### Backend Setup
+
+```bash
+cd Backend/server
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+```
+
+The backend API runs on `http://localhost:8000`.
+
+### Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+VITE_GEMINI_API_KEY=your_gemini_api_key_here
+VITE_API_URL=http://localhost:8000
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
+NODE_ENV=development
+```
+
+---
+
+## 🎮 Usage
+
+### Pages
+
+| Page | Route | Description |
+|------|-------|-------------|
+| **Landing** | `/` | Marketing page with features, comparisons, and bilingual support |
+| **Auth** | `/auth` | Login and registration with JWT |
+| **Home** | `/home` | Post-login landing page |
+| **Dashboard** | `/template` | Full dashboard with 7 tabs |
+
+### Dashboard Tabs
+
+| Tab | Description |
+|-----|-------------|
+| **Dashboard** | Analytics, bot status, activity feed, usage trends, AI model distribution |
+| **My Bots** | Bot configuration, appearance, AI behavior, custom commands, test conversation |
+| **Settings** | Profile, password, 2FA, API keys |
+| **Notifications** | Email alerts, in-app notifications, sound, DND hours |
+| **Help** | Getting started, command reference, troubleshooting, FAQ |
+| **Support** | Contact form, support resources |
+| **AI Help** | Gemini-powered AI assistant with rich message formatting |
+
+---
+
+## 🧠 Tech Stack
+
+<div align="center">
+
+| Layer | Technology |
+|-------|-----------|
+| **Frontend** | React 19, TypeScript, Vite 7, Tailwind CSS 4 |
+| **UI Components** | shadcn/ui, Radix primitives, Lucide Icons, Framer Motion, GSAP |
+| **Backend** | Django 4.2, Django REST Framework 3.14 |
+| **Authentication** | JWT (djangorestframework-simplejwt) |
+| **Database** | SQLite |
+| **AI** | Google Gemini API |
+| **Charts** | Recharts |
+| **3D Graphics** | React Three Fiber, Three.js |
+
+</div>
+
+---
+
+## 📁 Project Structure
+
+```
+BotU/
+├── src/                    # React frontend source
+│   ├── components/         # UI components (shadcn/ui + custom)
+│   ├── pages/              # Application pages and dashboard tabs
+│   ├── contexts/           # Auth, Language, Animation contexts
+│   ├── hooks/              # Custom React hooks
+│   └── lib/                # Utilities, translations, API helpers
+├── Backend/server/         # Django backend
+│   ├── core/               # Django settings, URLs, WSGI/ASGI
+│   └── user/               # User auth, bot/command models, API views
+├── public/                 # Static assets, Netlify config
+├── package.json
+└── vite.config.ts
+```
+
+---
+
+## 🔌 API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/auth/register/` | POST | User registration |
+| `/auth/login/` | POST | User login (returns JWT) |
+| `/auth/bots/` | GET | List user's bots |
+| `/auth/update_gemini_api_key/` | POST | Save Gemini API key |
+| `/auth/update_botfuther_tokens/` | POST | Save BotFather tokens |
+| `/auth/ai/generate-content/` | POST | Gemini AI chat proxy |
+
+---
+
+## 📄 License
+
+This project is [MIT](LICENSE) licensed.
+
+---
+
+<div align="center">
+  <br>
+  <p style="font-size: 1.3em; color: #d3869b;">
+    ⭐ If you found this project useful, please give it a star!
+  </p>
+  <p style="color: #83a598;">
+    It took a lot of time and effort to build this project — your support means a lot ❤️
+  </p>
+  <br>
+  <p>
+    <a href="https://github.com/AmirabbasRouintan/BotU">
+      <img src="https://img.shields.io/github/stars/AmirabbasRouintan/BotU?style=for-the-badge&logo=github&color=yellow" alt="Stars">
+    </a>
+    <a href="https://github.com/AmirabbasRouintan/BotU/issues">
+      <img src="https://img.shields.io/github/issues/AmirabbasRouintan/BotU?style=for-the-badge&logo=github" alt="Issues">
+    </a>
+  </p>
+  <br>
+</div>
