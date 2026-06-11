@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/title.svg" alt="BotU" width="260" height="50">
+  <h1 style="color: #d3869b; font-family: monospace; font-size: 2.5em; margin: 0; font-weight: bold;">BotU</h1>
   <p style="font-size: 1.1em; color: #83a598; margin-top: 5px;">
     <strong>A no-code Telegram bot builder platform with AI-powered assistance</strong>
   </p>
