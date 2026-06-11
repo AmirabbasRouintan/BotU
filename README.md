@@ -1,7 +1,5 @@
 <div align="center">
-  <h2>
-    <span style="color: #d3869b; font-family: monospace; font-size: 1.6em;">❝ BotU ❞</span>
-  </h2>
+  <img src="assets/title.svg" alt="BotU" width="260" height="50">
   <p style="font-size: 1.1em; color: #83a598; margin-top: 5px;">
     <strong>A no-code Telegram bot builder platform with AI-powered assistance</strong>
   </p>
@@ -125,6 +123,8 @@ BotU/
 
 ## 🔌 API Endpoints
 
+<div align="center">
+
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/auth/register/` | POST | User registration |
@@ -133,6 +133,8 @@ BotU/
 | `/auth/update_gemini_api_key/` | POST | Save Gemini API key |
 | `/auth/update_botfuther_tokens/` | POST | Save BotFather tokens |
 | `/auth/ai/generate-content/` | POST | Gemini AI chat proxy |
+
+</div>
 
 ---
 
